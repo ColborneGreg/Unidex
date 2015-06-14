@@ -1,0 +1,20 @@
+Imports System.Threading.Tasks
+Imports System.Collections.ObjectModel
+
+
+
+Namespace Interfaces
+    Public Interface IRecord
+        Inherits ISize
+
+        Property Pictures As String()
+        ReadOnly Property Count As Int64
+        ReadOnly Property Item(Optional Index As Int64 = 0) As IPictureSet
+        ReadOnly Property Item(Name As String) As IPictureSet
+        ReadOnly Property Stack As ObservableCollection(Of Object)
+        ReadOnly Property Collected As ObservableCollection(Of IPictureSet)
+
+        Property CurrentIndex As Int64
+
+    End Interface
+End Namespace
