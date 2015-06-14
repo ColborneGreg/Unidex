@@ -1,0 +1,40 @@
+Imports System.ComponentModel
+Imports System.Runtime.CompilerServices
+Imports System.IO
+
+
+Namespace Interfaces
+    Public Interface IIdentification
+
+        Event ValueChanged() 
+
+#Region "Identification"
+        Property Created As Date
+        Property Index As Int64
+        Property Name As String
+        Property Weight As Int64
+
+        Function IsNothing() As Boolean
+#End Region
+
+#Region "Validate"
+        Sub Check()
+#End Region
+
+#Region "Interface Sink"
+
+        ReadOnly Property LastUpdated As DateTime
+        ReadOnly Property LastUpdatedBy As String
+        Property ClearanceRequired As Int64
+        Property ClearanceIsRequired As Boolean
+
+        ReadOnly Property SelfCheck(User As IUser) As IIdentification
+
+        ReadOnly Property Value(User As IUser) As Object
+        WriteOnly Property Value(LastUpdated As DateTime, LastUpdatedBy As String) As Object
+        Property Value(LastUpdated As DateTime, LastUpdatedBy As IUser) As Object
+        Sub Validate(UpdatedDate As Date, LastUpdatedBy As IUser)
+
+#End Region
+    End Interface
+End Namespace
