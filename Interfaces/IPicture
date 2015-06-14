@@ -1,0 +1,17 @@
+Imports System.Threading.Tasks
+
+
+Namespace Interfaces
+    Public Interface IPicture
+        Inherits ISize
+
+        Property File As Object
+        Property Image As Object
+        Property Path As String
+        Function SetPixelData(Decoder As Object, Optional AwaitCopy As Boolean = True) As Task
+        Property Source As Object
+        Property UriString As String
+        ReadOnly Property URI As Uri
+
+    End Interface
+End Namespace
