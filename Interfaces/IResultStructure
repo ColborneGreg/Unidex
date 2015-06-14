@@ -1,0 +1,33 @@
+Imports System.IO
+
+Namespace Interfaces
+    Public Interface iResultsStructure
+
+
+        Property ID As String
+        Property From As Object
+        Property Name As String
+        Property Description As String
+        Property ParentID As String
+        Property Size As Long
+        Property UpLoad_Location As String
+        Property Comments_Count As Integer
+        Property Comments_Enabled As Boolean
+        Property IsEmbeddable As Boolean
+        Property count As Integer
+        Property Link As String
+        Property type As String
+        Property shared_With As Object
+        Property created_time As String
+        Property Updated_time As String
+        Property client_updated_time As String
+        Property Results As System.Collections.Generic.IDictionary(Of String, Object)
+
+
+        Function TryResult(FromResult As Object, Name As String) As Object
+
+        Function CastAsResults(ResultObject As Object) As iResultsStructure
+        Function CastAsResults(ResultObject As System.Collections.Generic.KeyValuePair(Of String, Object)) As iResultsStructure
+
+    End Interface
+End Namespace
