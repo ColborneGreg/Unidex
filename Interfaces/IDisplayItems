@@ -1,0 +1,27 @@
+
+Namespace Interfaces
+    Public Interface IDisplayItems
+
+        Property Manifest As IStrings
+        Property ManifestLabels As IStrings
+
+        Property ByName(Name As String) As IDisplayItem
+        Property ByIndex(Number As Int64) As IDisplayItem
+
+        Property _0 As IDisplayItem
+        Property _1 As IDisplayItem
+        Property _2 As IDisplayItem
+        Property _3 As IDisplayItem
+        Property _4 As IDisplayItem
+        Property _5 As IDisplayItem
+        Property _6 As IDisplayItem
+        Property _7 As IDisplayItem
+        Property _8 As IDisplayItem
+        Property _9 As IDisplayItem
+        Property _10 As IDisplayItem
+        Property _11 As IDisplayItem
+        Property _12 As IDisplayItem
+        Property _13 As IDisplayItem
+
+    End Interface
+End Namespace
