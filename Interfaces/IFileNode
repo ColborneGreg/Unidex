@@ -1,0 +1,16 @@
+Imports System.Threading.Tasks
+
+Namespace Interfaces
+    Public Interface IFileNode(Of IStream)
+        Inherits IFileBase(Of IStream)
+
+        Property FileData As IExtension
+
+        Event Status(Message As String)
+        Event FileSystemStarted()
+        Function Save(Optional IsBackup As Boolean = False) As Task
+        Function OpenOrCreate(FileName As String) As Task(Of IExtension)
+        Function OpenOrCreate() As Task(Of IExtension)
+
+    End Interface
+End Namespace
