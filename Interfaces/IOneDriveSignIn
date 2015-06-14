@@ -1,0 +1,26 @@
+Imports System.Threading.Tasks
+
+Namespace Interfaces
+    Public Interface IOneDriveSignIn(Of IImageType, ILiveAuthClient, ILiveConnectClient)
+
+        Event SignInComplete(Result As IOneDriveSignIn(Of IImageType, ILiveAuthClient, ILiveConnectClient))
+
+        Function SignIn() As Task(Of IOneDriveSignIn(Of IImageType, ILiveAuthClient, ILiveConnectClient))
+
+        Property UserName As String
+        Property UserPicture As IImageType
+
+        Property Scopes As IScopes
+
+        Property LiveAuthClient As ILiveAuthClient
+        Property LiveConnectClient As ILiveConnectClient
+
+        Property FirstName As String
+        Property LastName As String
+        Property BirthDay As DateTime
+        Property Gender As String
+        Property Locale As String
+
+
+    End Interface
+End Namespace
