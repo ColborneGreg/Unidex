@@ -1,0 +1,30 @@
+Namespace Interfaces
+    Public Interface IArrayBase(Of someType)
+
+        Property Name As String
+
+        Property OverHead As IExtension
+
+        Event Cleared()
+        Event Populated()
+
+
+        Function Count() As Int64
+        Sub Clear()
+        Property Collected() As String()
+        Property Names As String()
+        Property Sorted As String()
+
+        Function IndexOf(Name As String) As Int64
+        Function LastIndex() As Int64
+        Property IsPopulated As Boolean
+
+        Property Changed As Boolean
+
+        Property OutOfDate As Boolean
+        Property Weights() As IWeight()
+        Property ReverseWeights() As Int64()
+        Property Weight(Index As Int64) As IWeight
+        Property ReverseWeight(Index As Int64) As Int64
+    End Interface
+End Namespace
