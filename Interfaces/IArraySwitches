@@ -1,0 +1,69 @@
+Namespace Interfaces
+    Public Interface IArraySwitches
+
+        Property CurrentQueryName As String
+        Property CurrentFieldName As String
+
+        Property Names As String()
+
+        Property Ascending As Boolean
+        Property Descending As Boolean
+        Property DoNotUpdate As Boolean
+
+        Property CompareDates As Boolean
+        Property CompareNumbers As Boolean
+        Property CompareDecimals As Boolean
+        Property CompareBytes As Boolean
+        Property CompareLikeValues As Boolean
+        Property CompareComparibleValues As Boolean
+
+        Property Deligates As IArray(Of [Delegate])
+        Delegate Function Check(inObject As IExtension) As Boolean
+
+        Property DateRanges As IArray(Of IDateRange)
+        Property NumberRanges As IArray(Of INumberRange)
+        Property DecimalRanges As IArray(Of IDecimalRange)
+        Property ByteRanges As IArray(Of IByteRange)
+        Property LikeValues As IArray(Of ILikeField)
+        Property ComparibleValues As IArray(Of ICompareField)
+
+        Public Interface IValueSet
+            Property FieldName As String
+            Property IsExclusion As Boolean
+        End Interface
+        Public Interface IRangeSet
+            Inherits IValueSet
+            Property IsLessThan As Boolean
+            Property IsGreaterThan As Boolean
+            Property IsEqualTo As Boolean
+        End Interface
+        Public Interface IDateRange
+            Inherits IRangeSet
+            Property StartDate As DateTime
+            Property EndDate As DateTime
+        End Interface
+        Public Interface INumberRange
+            Inherits IRangeSet
+            Property ValueOne As Int64
+            Property ValueTwo As Int64
+        End Interface
+        Public Interface IDecimalRange
+            Inherits IRangeSet
+            Property ValueOne As Decimal
+            Property ValueTwo As Decimal
+        End Interface
+        Public Interface IByteRange
+            Inherits IRangeSet
+            Property ValueOne As Byte
+            Property ValueTwo As Byte
+        End Interface
+        Public Interface ILikeField
+            Inherits IValueSet
+            Property SomeValue As String
+        End Interface
+        Public Interface ICompareField
+            Inherits IValueSet
+            Property SomeValue As IExtension
+        End Interface
+    End Interface
+End Namespace
