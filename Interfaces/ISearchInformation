@@ -1,0 +1,40 @@
+Namespace Interfaces
+    Public Interface ISearchInformation
+
+        Property StartOfWord As Int64
+        Property CurrectPosition As Int64
+        Property CurrectSeparatorPosition As Int64
+        Property CurrectWordPosition As Int64
+        Property LastWordReached As Boolean
+
+        Property SeparateSpace As Boolean
+        Property CamelCasing As Boolean
+        Property ReturnComplexType As Boolean
+
+        Property ProcessWord As Boolean
+        Property CapDetected As Boolean
+        Property FoundDelimiter As Boolean
+
+        Property Delimiters As IChars
+        Property SeparatorItems As ISeparatorItem()
+
+        Property CurrentSeparator As ISeparatorItem
+        Property PreviousSeparator As ISeparatorItem
+
+        Sub ConnectCurrentSeparatorsBeforeWordTotheLastSeparatorsAfterWord()
+
+        Sub StartCompareCharacter(ComparableCharacter As Char)
+        Event CompareCharacter(ComparableCharacter As Char, ByRef Information As ISearchInformation)
+
+        Sub CompareCharacterBase(ComparableCharacter As Char, ByRef Information As ISearchInformation)
+        Sub CompareCharacterExtension(ComparableCharacter As Char, ByRef Information As ISearchInformation)
+        Sub CompareCharacterCamelCase(ComparableCharacter As Char, ByRef Information As ISearchInformation)
+
+        Event FoundWord(Word As String, ByRef Information As ISearchInformation)
+        Sub WordFound(Word As String)
+
+        Function Parse(Message As String) As ISeparatorItem()
+    End Interface
+End Namespace
+
+
