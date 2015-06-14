@@ -1,0 +1,16 @@
+Namespace Interfaces
+    Public Interface IWeight
+
+        Event WeightOutOfDate()
+        Event WeightChanged(Weight As Int64, Index As Int64)
+        Sub Clear()
+        Sub Add(Name As String)
+        Property Weight As Int64
+        Property IndexOfCurrentEntry As Int64
+        Property OutOfDate As Boolean
+        Property NewEntries As String()
+        Property NameOfCurrentEntry As String
+
+    End Interface
+End Namespace
+
