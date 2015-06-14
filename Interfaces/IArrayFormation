@@ -1,0 +1,39 @@
+Namespace Interfaces
+    Public Interface IFormation(Of SomeType)
+        Inherits IArrayBase(Of SomeType)
+
+        Event SortUpdated()
+        Event ReconcileRequested()
+        Event ItemAdded(ByRef Item As SomeType)
+        Event ItemChanged(ByRef Item As SomeType, Index As Int64)
+        Event WeighNameDelegateNotSet()
+
+        WriteOnly Property AddUnique(Optional Name As String = Nothing) As SomeType
+
+        Property Item(Index As Int64) As SomeType
+        Property Item(Name As String, Optional ReAdjust As Boolean = False) As SomeType
+
+        WriteOnly Property NewItem As SomeType
+        WriteOnly Property NewItem(Name As String) As SomeType
+        WriteOnly Property NewItems As SomeType()
+        WriteOnly Property NewItems(names As String()) As SomeType()
+
+        Property WeighName As WeighNameDelegate
+        Sub WeighAll()
+        Overloads Function Weigh(Name As String, ReAdjust As Boolean) As Int64
+    End Interface
+
+    Public Interface IFormationExtension(Of SomeType)
+        Inherits IFormation(Of SomeType)
+
+        Sub Reconcile()
+        Sub Sort()
+        Sub Sort(TheArray() As String)
+
+        Overloads Function Weigh(Name As String) As Int64
+
+    End Interface
+
+    Public Delegate Function WeighNameDelegate(Name As String)
+
+End Namespace
