@@ -1,0 +1,29 @@
+Imports System.Threading.Tasks
+
+Namespace Interfaces
+    Public Interface IFileBase(Of IStream)
+
+
+        Event FileNameIsNotSet()
+        Event FileNameOfBackupIsNotSet()
+
+        Property FileName As String
+        Property FileNameOfBackup As String
+        Property JustStarted As Boolean
+        Property IsOneDriveCapable As Boolean
+        Property IsConnectionRestricted As Boolean
+
+        Property LocalFileStream As IStream
+        Property RoamingFileStream As IStream
+        Property BackupStream As IStream
+
+        Function GetFileStream() As Task(Of IStream)
+
+        Function GetBackupStream() As Task(Of IStream)
+
+        Function OpenOrCreateLocal() As Task(Of IStream)
+        Function OpenOrCreateFileStream(Optional OneDriveSwitch As Boolean = False) As Task(Of IStream)
+
+
+    End Interface
+End Namespace
