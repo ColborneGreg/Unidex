@@ -1,0 +1,51 @@
+Imports System.Threading.Tasks
+
+
+
+Namespace Interfaces
+    Public Interface IOneDriveControl(Of IImageType, ILiveAuthClient, ILiveConnectClient, ILiveOperationResult, IStream, IStorageFile)
+        Inherits IExtension
+
+        Property SignOnSession As unidex.Interfaces.IOneDriveSignIn(Of IImageType, ILiveAuthClient, ILiveConnectClient)
+
+        Property StoredOneDriveID(Name As String) As String
+
+        Sub ScopesChanged()
+
+        Function GetRootFolder(Optional ForceUpdate As Boolean = False) As Task(Of ILiveOperationResult)
+        Function GetCalendars(Optional ForceUpdate As Boolean = False) As Task(Of ILiveOperationResult)
+        Function GetContacts(Optional ForceUpdate As Boolean = False) As Task(Of ILiveOperationResult)
+        Function GetEvents(Optional ForceUpdate As Boolean = False) As Task(Of ILiveOperationResult)
+
+
+        Function GetFolder(FolderID As String) As Task(Of ILiveOperationResult)
+        Function GetFolders(FolderID As String) As Task(Of ILiveOperationResult)
+        Function GetFolders(FolderLiveResult As ILiveOperationResult) As Task(Of ILiveOperationResult)
+        Function GetFiles(FolderID As String) As Task(Of ILiveOperationResult)
+        Function GetFiles(FolderLiveResult As ILiveOperationResult) As Task(Of ILiveOperationResult)
+
+
+        Function GetThumbnails(FolderID As String) As Task(Of ILiveOperationResult)
+        Function GetThumbnails(FolderLiveResult As ILiveOperationResult) As Task(Of ILiveOperationResult)
+
+
+        Function GetFolderID(FolderName As String, FolderResult As ILiveOperationResult) As String
+        Function GetFolderID(FolderName As String, FolderResultDictionary As System.Collections.Generic.IDictionary(Of String, Object)) As String
+        Function GetFileID(FileName As String, FolderResult As ILiveOperationResult) As String
+        Function GetFileID(FileName As String, FolderResultDictionary As System.Collections.Generic.IDictionary(Of String, Object)) As String
+
+
+        Function MapUserOneDrive() As task
+
+
+        Function GetFile(ID As String) As Task(Of IStream)
+        Function SetFile(FolderPath As String, Name As String, Stream As IStream) As Task(Of ILiveOperationResult)
+
+        Function DownloadFileStream(FilePath As String) As Task(Of IStream)
+        Function UploadFileStream(FilePath As String, FileStream As IStream) As Task
+
+        Function DownloadFile(FilePath As String) As Task(Of IStorageFile)
+        Function UploadFile(FilePath As String, File As IStorageFile) As Task
+
+    End Interface
+End Namespace
