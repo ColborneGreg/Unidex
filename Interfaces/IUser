@@ -1,0 +1,29 @@
+Imports System.IO
+
+Namespace Interfaces
+    Public Interface IUser
+
+        ReadOnly Property Created As DateTime
+
+        Property Name As String
+
+        Property AccessedFrom As String()
+
+        Property Deny As Boolean
+        Property DenyWrite As Boolean
+        Property DenyLogon As Boolean
+        Property DenyPasswordChange As Boolean
+
+        Property Clearance As String
+        Property ClearanceWriteLevel As Int64
+        Property ClearanceReadLevel As Int64
+
+        Property Password(Key As Int64) As String
+        WriteOnly Property Password(Old As String) As String
+        ReadOnly Property Validate(Password As String) As Boolean
+
+        ReadOnly Property Information As iAuthorityInfo
+        Sub Authorize(OriginalDate As DateTime, ChangeDate As DateTime)
+        Sub Authorize(OriginalDate As DateTime, ChangeDate As DateTime, ClearanceLevel As Int64)
+    End Interface
+End Namespace
