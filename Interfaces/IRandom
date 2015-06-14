@@ -1,0 +1,13 @@
+
+
+Namespace Interfaces
+    Public Interface IRandom
+        Inherits IIdentification
+        ReadOnly Property StartBig As Boolean
+        Property MaxValue As Int64
+        Property MinValue As Int64
+        ReadOnly Property Number() As Int64
+        ReadOnly Property Number(Min As Long, Max As Long) As Int64
+
+    End Interface
+End Namespace
