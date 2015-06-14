@@ -1,0 +1,12 @@
+
+
+Namespace Interfaces
+    Public Interface IMachine
+        Property DenyLogon As Boolean
+        Property IpAddress As String
+        Property Port As Int16
+        Property IsConnected As Boolean
+        Property LogonAttempts As Int64
+
+    End Interface
+End Namespace
