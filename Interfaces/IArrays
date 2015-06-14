@@ -1,0 +1,58 @@
+Imports System.IO
+
+Namespace Interfaces
+    Public Interface IArray(Of someType)
+
+        Event Cleared()
+        Event Populated()
+        Event ItemAdded(ByRef Item As someType)
+        Event ItemChanged(ByRef Item As someType, Index As Int64)
+
+        Property ʴ() As someType()
+
+        Function Count() As Int64
+        Function Clear() As someType()
+        Property Collected() As someType()
+
+        Sub AddRange(Range() As someType)
+
+        WriteOnly Property NewItem() As someType
+        WriteOnly Property NewItems As someType()
+
+        Property Item(Index As Int64) As someType
+
+
+
+        Property IsPopulated As Boolean
+        Function LastIndex() As Int64
+
+    End Interface
+
+    Public Interface IStrings
+        Inherits IFormation(Of String), IFormationExtension(Of String)
+        Overloads WriteOnly Property NewItem(UseValueAsName As Boolean) As String
+    End Interface
+    Public Interface INumbers
+        Inherits IFormation(Of Decimal), IFormationExtension(Of Decimal)
+    End Interface
+    Public Interface IIntegers
+        Inherits IFormation(Of Int64), IFormationExtension(Of Int64)
+    End Interface
+    Public Interface IDates
+        Inherits IFormation(Of DateTime), IFormationExtension(Of DateTime)
+    End Interface
+    Public Interface ITimeSpans
+        Inherits IFormation(Of TimeSpan), IFormationExtension(Of TimeSpan)
+    End Interface
+    Public Interface IBytes
+        Inherits IFormation(Of Byte), IFormationExtension(Of Byte)
+    End Interface
+    Public Interface IObjects
+        Inherits IFormation(Of Object), IFormationExtension(Of Object)
+    End Interface
+    Public Interface ICharacters
+        Inherits IFormation(Of IExtension), IFormationExtension(Of IExtension)
+    End Interface
+
+End Namespace
+
