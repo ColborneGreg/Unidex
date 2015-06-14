@@ -1,0 +1,31 @@
+Namespace Interfaces
+    Public Interface ISizeBase
+        Inherits IIdentification
+        Property Max As Decimal
+        Property Original As Decimal
+        Property Scaled As Decimal
+        ReadOnly Property ItemizedSize As Decimal
+        ReadOnly Property ToScreenSize As Decimal
+    End Interface
+    Public Interface IHeight
+        Inherits ISizeBase
+    End Interface
+    Public Interface ISize
+        Inherits IIdentification
+        Property Height As IHeight
+        Property Width As IWidth
+        Property IsSmall As Boolean
+        Property myPickedSize As Integer
+        Property ScaledRatio As Decimal
+    End Interface
+    Public Interface IWidth
+        Inherits ISizeBase
+    End Interface
+    Public Interface IMargin
+
+        Property Left As Int64
+        Property Top As Int64
+        Property Right As Int64
+        Property Bottom As Int64
+    End Interface
+End Namespace
