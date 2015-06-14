@@ -1,0 +1,105 @@
+Imports System.Collections.ObjectModel
+
+Namespace Interfaces
+    Public Interface IQuery
+
+        Property Conditions As IArraySwitches
+
+        ReadOnly Property Array(List As IArrayBase(Of Object)) As IQuery
+
+        Property Collected As ObservableCollection(Of IExtension)
+        Property Collected(FieldName As String) As ObservableCollection(Of Object)
+
+        Property InnerCollected(Name As String) As ObservableCollection(Of IExtension)
+        Property InnerCollected(Name As String, FieldName As String) As ObservableCollection(Of Object)
+
+        Function Ascending() As IQuery
+        Function Descending() As IQuery
+
+        Function Range(QueryString As String) As IQuery
+        Function Range(Span As TimeSpan, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(Span As TimeSpan, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(FieldName As String, Span As TimeSpan, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(FieldName As String, Span As TimeSpan, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(StartDate As DateTime, Span As TimeSpan, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(StartDate As DateTime, Span As TimeSpan, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(FieldName As String, StartDate As DateTime, Span As TimeSpan, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(FieldName As String, StartDate As DateTime, Span As TimeSpan, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(Span As TimeSpan, EndDate As DateTime, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(Span As TimeSpan, EndDate As DateTime, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(FieldName As String, Span As TimeSpan, EndDate As DateTime, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(FieldName As String, Span As TimeSpan, EndDate As DateTime, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(StartDate As DateTime, EndDate As DateTime, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(StartDate As DateTime, EndDate As DateTime, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(FieldName As String, StartDate As DateTime, EndDate As DateTime, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(FieldName As String, StartDate As DateTime, EndDate As DateTime, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(SomeDate As DateTime, IsGreaterThan As Boolean, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(SomeDate As DateTime, IsGreaterThan As Boolean, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(FieldName As String, SomeDate As DateTime, IsGreaterThan As Boolean, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(FieldName As String, SomeDate As DateTime, IsGreaterThan As Boolean, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(IsLessThan As Boolean, SomeDate As DateTime, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(IsLessThan As Boolean, SomeDate As DateTime, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(FieldName As String, IsLessThan As Boolean, SomeDate As DateTime, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(FieldName As String, IsLessThan As Boolean, SomeDate As DateTime, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(Start As Int64, Finish As Int64, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(Start As Int64, Finish As Int64, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(FieldName As String, Start As Int64, Finish As Int64, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(FieldName As String, Start As Int64, Finish As Int64, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(SomeNumber As Int64, IsGreaterThan As Boolean, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(SomeNumber As Int64, IsGreaterThan As Boolean, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(FieldName As String, SomeNumber As Int64, IsGreaterThan As Boolean, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(FieldName As String, SomeNumber As Int64, IsGreaterThan As Boolean, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(IsLessThan As Boolean, SomeNumber As Int64, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(IsLessThan As Boolean, SomeNumber As Int64, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(FieldName As String, IsLessThan As Boolean, SomeNumber As Int64, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(FieldName As String, IsLessThan As Boolean, SomeNumber As Int64, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(Start As Decimal, Finish As Decimal, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(Start As Decimal, Finish As Decimal, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(FieldName As String, Start As Decimal, Finish As Decimal, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(FieldName As String, Start As Decimal, Finish As Decimal, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(SomeDecimal As Decimal, IsGreaterThan As Boolean, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(SomeDecimal As Decimal, IsGreaterThan As Boolean, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(FieldName As String, SomeDecimal As Decimal, IsGreaterThan As Boolean, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(FieldName As String, SomeDecimal As Decimal, IsGreaterThan As Boolean, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(IsLessThan As Boolean, SomeDecimal As Decimal, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(IsLessThan As Boolean, SomeDecimal As Decimal, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(FieldName As String, IsLessThan As Boolean, SomeDecimal As Decimal, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(FieldName As String, IsLessThan As Boolean, SomeDecimal As Decimal, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(Start As Byte, Finish As Byte, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(Start As Byte, Finish As Byte, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(FieldName As String, Start As Byte, Finish As Byte, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(FieldName As String, Start As Byte, Finish As Byte, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(SomeByte As Byte, IsGreaterThan As Boolean, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(SomeByte As Byte, IsGreaterThan As Boolean, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(FieldName As String, SomeByte As Byte, IsGreaterThan As Boolean, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(FieldName As String, SomeByte As Byte, IsGreaterThan As Boolean, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(IsLessThan As Boolean, SomeByte As Byte, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(IsLessThan As Boolean, SomeByte As Byte, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+        Function Range(FieldName As String, IsLessThan As Boolean, SomeByte As Byte, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False) As IQuery
+        Function Range(FieldName As String, IsLessThan As Boolean, SomeByte As Byte, Optional IsEqualTo As Boolean = False, Optional ExcludeGivenRange As Boolean = False, Optional DoNotUpdate As Boolean = False) As IQuery
+
+
+        Function Field(Name As String) As IQuery
+        Function Field(Name As String, SomeValue As Object) As IQuery
+        Function Field(Name As String, SomeValue As Object, DoNotUpdate As Boolean) As IQuery
+        Function Field(Names() As String, Values() As Object) As IQuery
+        Function Field(Names() As String, Values() As Object, DoNotUpdate As Boolean) As IQuery
+
+        Function LikeField(SomeValue As String) As IQuery
+        Function LikeField(SomeValue As String, DoNotUpdate As Boolean) As IQuery
+        Function LikeField(FieldName As String, SomeValue As String) As IQuery
+        Function LikeField(FieldName As String, SomeValue As String, DoNotUpdate As Boolean) As IQuery
+
+        Function CompareField(SomeValue As Object) As IQuery
+        Function CompareField(SomeValue As Object, DoNotUpdate As Boolean) As IQuery
+        Function CompareField(FieldName As String, SomeValue As Object) As IQuery
+        Function CompareField(FieldName As String, SomeValue As Object, DoNotUpdate As Boolean) As IQuery
+
+        Function ByteCheck(inObject As IExtension) As Boolean
+        Function ComparibleCheck(InObject As IExtension) As Boolean
+        Function DatesCheck(InOject As IExtension) As Boolean
+        Function DecimalCheck(InObject As IExtension) As Boolean
+        Function LikeValuesCheck(InObject As IExtension) As Boolean
+        Function NumbersCheck(InObject As IExtension) As Boolean
+    End Interface
+End Namespace
