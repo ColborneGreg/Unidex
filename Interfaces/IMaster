@@ -1,0 +1,35 @@
+Imports System.IO
+
+
+Namespace Interfaces
+    Public Interface IMaster(Of StreamType)
+
+
+        Sub CreateApplicationID()
+
+        Property ApplicationId As String
+
+        Property LocalInformation As IExtension
+        Property LocalInformationFile As IFileNode(Of StreamType)
+
+        Property RoamingInformation As IExtension
+        Property RoamingInformationFile As IFileNode(Of StreamType)
+        Sub CloseRoamingFile()
+
+
+        Property Base As IExtension
+        Property ProgramDataFile As IFileNode(Of StreamType)
+
+
+
+        Interface DisplayItems
+            Property Group As IDisplayItems
+            Property Record As IDisplayItems
+            Property SetOf As IDisplayItems
+            Property Picture As IDisplayItems
+        End Interface
+    End Interface
+End Namespace
+
+
+
