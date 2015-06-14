@@ -1,0 +1,15 @@
+
+
+Namespace Interfaces
+    Public Interface IAuthorityInfo
+        Sub Authorize()
+        Sub Authorize(ClearanceLevel As Int64)
+        Sub Authorize(OriginalDate As DateTime, ChangeDate As DateTime)
+        Sub Authorize(OriginalDate As DateTime, ChangeDate As DateTime, ClearanceLevel As Int64)
+
+        Property User As IUser
+        Property ChangeDate As DateTime
+        Property OriginalDate As DateTime
+    End Interface
+End Namespace
+
