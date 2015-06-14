@@ -1,0 +1,12 @@
+Namespace Interfaces
+    Public Interface IDisplayItem
+        Property Label As String
+        Property Item As String
+        ReadOnly Property ItemName As String
+        Property IsHidden As Boolean
+        Property SelectedIndex As Int64
+        Property Manifest As String()
+        Property ManifestLabels As String()
+        Property Value As Object
+    End Interface
+End Namespace
