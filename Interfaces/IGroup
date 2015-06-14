@@ -1,0 +1,18 @@
+ 
+Imports System.Collections.ObjectModel
+
+
+Namespace Interfaces
+    Public Interface IGroup
+        Inherits ISize
+
+        Property Records As String()
+        ReadOnly Property Count As Int64
+        ReadOnly Property Item(Optional Index As Int64 = 0) As IRecord
+        ReadOnly Property Item(Name As String) As IRecord
+        ReadOnly Property Collected As ObservableCollection(Of IRecord)
+        ReadOnly Property Randomize(Optional Min As Decimal = 2, Optional Max As Decimal = 10) As IRandom
+        Property Random As IRandom
+
+    End Interface
+End Namespace
