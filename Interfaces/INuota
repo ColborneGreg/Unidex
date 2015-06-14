@@ -1,0 +1,102 @@
+Imports Unidex.Interfaces
+
+
+
+Namespace Interfaces
+    Public Interface INuotaBase
+
+
+        Property Control As INuotaBaseCharacter
+
+        Property Overhead As IExtension
+    End Interface
+
+    Public Interface INuotaBaseIdentification
+        Inherits IIdentification
+
+        Property Overhead As IExtension
+
+    End Interface
+
+    Public Interface INuotaBaseCharacter
+        Inherits INuotaBaseIdentification
+
+
+
+        Sub Delete(Name As String)
+
+        Property GrandParent As IExtension
+        Property Parent As IExtension
+        Property ʴv(Name As String, User As Interfaces.IUser) As Object
+        Property ʴh(Name As String, User As Interfaces.IUser, Optional CanSort As Boolean = False) As Byte
+        Property ʴs(Name As String, User As Interfaces.IUser, Optional CanSort As Boolean = False) As String
+        Property ʴm(Name As String, User As Interfaces.IUser) As System.IO.MemoryStream
+        Property ʴn(Name As String, User As Interfaces.IUser, Optional CanSort As Boolean = False) As Int64
+        Property ʴb(Name As String, User As Interfaces.IUser) As Boolean
+        Property ʴd(Name As String, User As Interfaces.IUser, Optional CanSort As Boolean = False) As Decimal
+        Property ʴt(Name As String, User As Interfaces.IUser, Optional CanSort As Boolean = False) As DateTime
+        Property ʴts(Name As String, User As Interfaces.IUser, Optional CanSort As Boolean = False) As TimeSpan
+
+        Property ʴnv(Name As String, Optional CreationProcedure As IExtension.ValueCreationDelegate = Nothing, Optional PolymorphProcedure As IExtension.ValueCreationDelegate = Nothing) As Object
+    End Interface
+
+
+    Public Interface INuotaFileNodeExtensionBase(Of ItemType As INuotaFileNodeExtensionItem, GroupType As INuotaFileNodeExtensionGroup(Of ItemType))
+        Inherits INuotaBaseCharacter
+
+        Event Status(Message As String)
+
+        Property FileName As String
+
+        Function LoadData() As Task
+        Function SaveData() As Task
+
+        Property ApplicationID As String
+
+        Property ControlAsGroup As INuotaFileNodeExtensionGroup(Of ItemType)
+        Property ControlAsSubGroup As INuotaFileNodeExtensionSubGroup(Of ItemType)
+
+    End Interface
+    Public Interface INuotaFileNodeExtensionGroup(Of ItemType As INuotaFileNodeExtensionItem)
+        Inherits INuotaFileNodeExtensionItem
+
+        Event ItemNameCalled(Title As String)
+        Property Item(Title As String) As ItemType
+
+#Region "Items"
+        Function ItemPolymorphProcedure(Title As String) As Object
+        Function ItemCreationProcedure(Title As String) As Object
+
+        Property Items As List(Of ItemType)
+
+        ReadOnly Property ItemsCount As Int64
+#End Region
+
+    End Interface
+    Public Interface INuotaFileNodeExtensionSubGroup(Of ItemType As INuotaFileNodeExtensionItem)
+        Inherits INuotaFileNodeExtensionGroup(Of ItemType)
+
+        Event GroupNameCalled(Title As String)
+
+        Property Group(Title As String) As INuotaFileNodeExtensionGroup(Of ItemType)
+
+#Region "Groups"
+        Function GroupPolymorphProcedure(Title As String) As Object
+        Function GroupCreationProcedure(Title As String) As Object
+
+        Property Groups As List(Of INuotaFileNodeExtensionGroup(Of ItemType))
+        ReadOnly Property GroupsCount As Int64
+#End Region
+
+    End Interface
+    Public Interface INuotaFileNodeExtensionItem
+        Inherits INuotaBaseCharacter
+
+        Event Status(Message As String)
+        Property Title As String
+
+        Property Deleted As Boolean
+
+    End Interface
+End Namespace
+
