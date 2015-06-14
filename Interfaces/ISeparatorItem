@@ -1,0 +1,16 @@
+
+
+Namespace Interfaces
+    Public Interface ISeparatorItem
+
+        Property Separator As Char
+        Property Index As Long
+        Property WordBefore As String
+        Property WordBeforeIndex As Long
+        Property WordAfter As String
+        Property WordAfterIndex As Long
+
+
+    End Interface
+End Namespace
+
