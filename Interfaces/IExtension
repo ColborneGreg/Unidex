@@ -1,0 +1,55 @@
+Imports System.IO
+
+Namespace Interfaces
+    Public Interface IExtension
+        Inherits IIdentification
+
+        Property All As IExtension()
+        Function Create(Letter As Char, Name As String) As IExtension
+        ReadOnly Property ʴ(Name As String) As IExtension
+
+        Property LastSaveDate As DateTime
+
+        Property ʴv(Name As String, User As IUser) As Object
+        Property ʴh(Name As String, User As IUser, Optional CanSort As Boolean = False) As Byte
+        Property ʴs(Name As String, User As IUser, Optional CanSort As Boolean = False) As String
+        Property ʴm(Name As String, User As IUser) As System.IO.MemoryStream
+        Property ʴn(Name As String, User As IUser, Optional CanSort As Boolean = False) As Int64
+        Property ʴb(Name As String, User As IUser) As Boolean
+        Property ʴd(Name As String, User As IUser, Optional CanSort As Boolean = False) As Decimal
+        Property ʴt(Name As String, User As IUser, Optional CanSort As Boolean = False) As DateTime
+        Property ʴts(Name As String, User As IUser, Optional CanSort As Boolean = False) As TimeSpan
+
+        Delegate Function ValueCreationDelegate(Title As String) As Object
+        Property NuotaValue As Object
+
+        Property ʴnv(Name As String, Optional CreationProcedure As ValueCreationDelegate = Nothing, Optional PolymorphProcedure As ValueCreationDelegate = Nothing) As Object
+        Delegate Function CreateCharacterDelegate(Letter As Char, Name As String) As IExtension
+        Property CreateCharacter As CreateCharacterDelegate
+
+        Event CreationProcedureNotSet()
+
+
+        Property GrandParent As IExtension
+        Property Parent As IExtension
+
+
+        Property PreviousCharacter As IExtension
+        Property NextCharacter(Letter As Char) As IExtension
+
+        Property FieldName As String
+        Property FieldType As Object
+
+        Property IsaChild As Boolean
+        Property Letter As Char
+        Property NeedsToSave As Boolean
+
+        Sub Delete()
+
+        Property CanSort As Boolean
+
+        Property Words As String()
+
+
+    End Interface
+End Namespace
