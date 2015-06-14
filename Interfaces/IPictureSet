@@ -1,0 +1,28 @@
+Imports System.Threading.Tasks
+
+
+
+Namespace Interfaces
+    Public Interface IPictureSet
+
+        Property CameraManufacturer As String
+        Property CameraModel As String
+        Property DateCreated As DateTime
+        Property DateTaken As DateTime
+        Property DisplayName As String
+        Property FilePath As String
+        Property Label As String
+        Property Latitude As Decimal
+        Property Longitude As Decimal
+        Property Orientation As String
+        Property Rating As String
+        Property Title As String
+        Property Height As Decimal
+        Property Width As Decimal
+        ReadOnly Property Large As IPicture
+        ReadOnly Property Small As IPicture
+        Function CopyFromFile(File As Object, Optional AwaitCopy As Boolean = True) As Task(Of IPictureSet)
+        ReadOnly Property Margin As Int64
+
+    End Interface
+End Namespace
