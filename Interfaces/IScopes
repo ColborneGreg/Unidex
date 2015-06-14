@@ -1,0 +1,35 @@
+
+Namespace Interfaces
+    Public Interface IScopes
+
+        Event ScopeChanged()
+
+        Property Scopes As String()
+        WriteOnly Property NewScope As String
+        WriteOnly Property SignIn As Boolean
+        WriteOnly Property UserSignIn As Boolean
+        WriteOnly Property UserAppData As Boolean
+        WriteOnly Property UserInformation As Boolean
+        WriteOnly Property Basic As Boolean
+        WriteOnly Property Birthday As Boolean
+        WriteOnly Property Calendars As Boolean
+        WriteOnly Property CalendarsReadOnly As Boolean
+        WriteOnly Property CalendarsWriteOnly As Boolean
+        WriteOnly Property Contacts As Boolean
+        WriteOnly Property Contacts_Birthday As Boolean
+        WriteOnly Property Contacts_Create As Boolean
+        WriteOnly Property Contacts_Calendars As Boolean
+        WriteOnly Property Contacts_Photos As Boolean
+        WriteOnly Property Contacts_SkyDrive As Boolean
+        WriteOnly Property Emails As Boolean
+        WriteOnly Property Events_Create As Boolean
+        WriteOnly Property Offline_Access As Boolean
+        WriteOnly Property Phone_Numbers As Boolean
+        WriteOnly Property Photos As Boolean
+        WriteOnly Property Postal_Addesses As Boolean
+        WriteOnly Property Share As Boolean
+        WriteOnly Property Skydrive As Boolean
+    End Interface
+End Namespace
+
+ 
