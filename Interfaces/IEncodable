@@ -1,0 +1,9 @@
+Imports System.IO
+
+Namespace Interfaces
+    Public Interface IEncodable
+        Function ToStream() As MemoryStream
+        Function Encrypt(Key As String) As String
+        Function StreamToString() As String
+    End Interface
+End Namespace
