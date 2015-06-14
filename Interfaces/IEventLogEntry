@@ -1,0 +1,14 @@
+
+
+Namespace Interfaces
+    Public Interface IEventLogEntry
+        Property Target As IIdentification
+        Property EventDate As Date
+        Property UserName As String
+        Property User As IUser
+        Property FromValue As Object
+        Property ToValue As Object
+
+    End Interface
+
+End Namespace
