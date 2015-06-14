@@ -1,0 +1,17 @@
+
+Namespace Interfaces
+    Public Interface IChars
+
+        ReadOnly Property Char1 As Char
+        ReadOnly Property Char2 As Char
+        ReadOnly Property Char3 As Char
+        ReadOnly Property Char4 As Char
+        ReadOnly Property Char5 As Char
+        ReadOnly Property Char6 As Char
+        ReadOnly Property Message As String
+
+        ReadOnly Property HasExtension As Boolean
+
+    End Interface
+End Namespace
+
