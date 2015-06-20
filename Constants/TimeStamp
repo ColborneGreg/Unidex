@@ -1,0 +1,45 @@
+
+Public Class TimeStamp
+    Private Shared Function Random(Min As Int64, Max As Int64) As Int64
+        Return CType(New System.Random, System.Random).Next(Min, Max) + 1
+    End Function
+
+    Public Shared Function Create() As String
+        Dim Millisecond As String = CInt(DateTime.Now.Millisecond)
+        Dim second As String = DateTime.Now.Second
+        Dim minute As String = DateTime.Now.Minute
+        Dim hour As String = DateTime.Now.Hour
+        Dim Year As String = DateTime.Now.Year
+        Dim month As String = DateTime.Now.Month
+        Dim week As String = CInt(DateTime.Now.DayOfYear / 7)
+        Dim Day As String = DateTime.Now.Day
+
+        Return Year & week & Day & hour & minute & second & Millisecond & Random(5001, 9999)
+    End Function
+    Public Overrides Function tostring() As String
+        Return TimeStamp.Create
+    End Function
+    Public Shared Narrowing Operator CType(ByVal timestamp As TimeStamp) As String
+        Return timestamp.tostring()
+    End Operator
+    Public Shared Operator +(obj1 As TimeStamp, obj2 As TimeStamp) As String
+        Return obj1.tostring & obj2.tostring
+    End Operator
+    Public Shared Operator +(obj1 As TimeStamp, obj2 As String) As String
+        Return obj1.tostring & obj2
+    End Operator
+    Public Shared Operator +(obj1 As String, obj2 As TimeStamp) As String
+        Return obj1 & obj2.tostring
+    End Operator
+
+    Public Shared Operator &(obj1 As TimeStamp, obj2 As TimeStamp) As String
+        Return obj1.tostring & obj2.tostring
+    End Operator
+    Public Shared Operator &(obj1 As TimeStamp, obj2 As String) As String
+        Return obj1.tostring & obj2
+    End Operator
+    Public Shared Operator &(obj1 As String, obj2 As TimeStamp) As String
+        Return obj1 & obj2.tostring
+    End Operator
+
+End Class
