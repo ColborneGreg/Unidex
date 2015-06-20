@@ -1,0 +1,60 @@
+Imports System.IO
+Imports System.Runtime.Serialization.Json
+
+Namespace Constants
+    <System.Runtime.Serialization.DataContract>
+    Public Class WebApi
+        Inherits JSONInherit(Of WebApi)
+
+        <System.Runtime.Serialization.DataMember>
+        Private mIsGet As Boolean,
+                mIsaValue As Boolean,
+                mIsaPicture As Boolean,
+                mPacketData As String,
+                mEncodedValue As String
+
+
+        Public Property IsGet As Boolean
+            Get
+                Return mIsGet
+            End Get
+            Set(value As Boolean)
+                mIsGet = value
+            End Set
+        End Property
+        Public Property IsaValue As Boolean
+            Get
+                Return mIsaValue
+            End Get
+            Set(value As Boolean)
+                mIsaValue = value
+            End Set
+        End Property
+        Public Property IsaPicture As Boolean
+            Get
+                Return mIsaPicture
+            End Get
+            Set(value As Boolean)
+                mIsaPicture = value
+            End Set
+        End Property
+        Public Property PacketData As String
+            Get
+                Return mPacketData
+            End Get
+            Set(value As String)
+                mPacketData = value
+            End Set
+        End Property
+
+        Public Property EncodedValue As String
+            Get
+                Return mEncodedValue
+            End Get
+            Set(value As String)
+                mEncodedValue = value
+            End Set
+        End Property
+
+    End Class
+End Namespace
