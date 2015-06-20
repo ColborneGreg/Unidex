@@ -1,0 +1,58 @@
+Imports unidex.Interfaces
+
+Namespace Constants
+    Public Structure LSVDelimiters
+        Implements IChars
+
+        Private Const mChar1 As Char = vbCrLf
+        Private Const mChar2 As Char = vbCrLf
+        Private Const mChar3 As Char = vbCrLf
+        Private Const mChar4 As Char = vbCrLf
+
+        Private Const mMessage As String = " is being processed to seperate each word by line"
+
+        Public ReadOnly Property Char1 As Char Implements IChars.Char1
+            Get
+                Return mChar1
+            End Get
+        End Property
+        Public ReadOnly Property Char2 As Char Implements IChars.Char2
+            Get
+                Return mChar2
+            End Get
+        End Property
+        Public ReadOnly Property Char3 As Char Implements IChars.Char3
+            Get
+                Return mChar3
+            End Get
+        End Property
+        Public ReadOnly Property Char4 As Char Implements IChars.Char4
+            Get
+                Return mChar4
+            End Get
+        End Property
+        Public ReadOnly Property Message As String Implements IChars.Message
+            Get
+                Return mMessage
+            End Get
+        End Property
+
+        Public ReadOnly Property Char5 As Char Implements IChars.Char5
+            Get
+                Return Nothing
+            End Get
+        End Property
+
+        Public ReadOnly Property Char6 As Char Implements IChars.Char6
+            Get
+                Return Nothing
+            End Get
+        End Property
+
+        Public ReadOnly Property HasExtension As Boolean Implements IChars.HasExtension
+            Get
+                Return False
+            End Get
+        End Property
+    End Structure
+End Namespace
