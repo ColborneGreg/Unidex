@@ -1,0 +1,83 @@
+Namespace OldStructures
+    Public Class AddedItem
+        Inherits System.EventArgs
+
+        Private mName As String
+        Private mWordBase As String
+        Private mIndex As Int64
+        Private mFoundBase As Boolean
+        Private mSerialNode As Boolean
+        Private mFoundNodeParent As Boolean
+
+        Private mItem As Object
+
+        ''' <summary>
+        ''' WARNING: use 'with' keyword to set name property!
+        ''' </summary>
+        ''' <remarks></remarks>
+        Sub New()
+        End Sub
+        Sub New(Name As String)
+            mName = Name
+        End Sub
+
+        Public Property Name As String
+            Get
+                Return mName
+            End Get
+            Set(value As String)
+                mName = value
+            End Set
+        End Property
+        Public Property Wordbase As String
+            Get
+                Return mWordBase
+            End Get
+            Set(value As String)
+                mWordBase = value
+            End Set
+        End Property
+        Public Property Index As Int64
+            Get
+                Return mIndex
+            End Get
+            Set(value As Int64)
+                mIndex = value
+            End Set
+        End Property
+        Public Property FoundBase As Boolean
+            Get
+                Return mFoundBase
+            End Get
+            Set(value As Boolean)
+                mFoundBase = value
+            End Set
+        End Property
+        Public Property SerialNode As Boolean
+            Get
+                Return mSerialNode
+            End Get
+            Set(value As Boolean)
+                mSerialNode = value
+            End Set
+        End Property
+        Public Property FoundNodeParent As Boolean
+            Get
+                Return mFoundNodeParent
+            End Get
+            Set(value As Boolean)
+                mFoundNodeParent = value
+            End Set
+        End Property
+
+        Public Property Item As Object
+            Get
+                Return mItem
+            End Get
+            Set(value As Object)
+                mItem = value
+            End Set
+        End Property
+
+    End Class
+End Namespace
