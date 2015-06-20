@@ -1,0 +1,95 @@
+Imports System.IO
+Imports System.Runtime.Serialization.Json
+
+Namespace Constants
+    <System.Runtime.Serialization.DataContract>
+    Public Class PacketData
+        Inherits JSONInherit(Of PacketData)
+
+
+        <System.Runtime.Serialization.DataMember>
+        Private mName As String,
+                mHostName As String,
+                mIpAddress As String,
+                mPort As Int64,
+                mJSONDATA As String,
+                mJSONUSER As String
+
+
+        Public Sub New(Optional MachineName As String = "WebMachine", Optional IpAddress As String = "127.0.0.1", Optional Port As Int64 = 4711)
+            mHostName = MachineName
+            mIpAddress = IpAddress
+            mPort = Port
+        End Sub
+
+
+        Public WriteOnly Property USER As Passwords
+            Set(value As Passwords)
+
+            End Set
+        End Property
+
+
+        Public ReadOnly Property JSONUSER As String
+            Get
+                Return mJSONUSER
+            End Get
+        End Property
+        Public Property JSONDATA As String
+            Get
+                Return mJSONDATA
+            End Get
+            Set(value As String)
+                mJSONDATA = value
+            End Set
+        End Property
+        Public WriteOnly Property JSONDATA(Optional MachineName As String = "WebMachine", Optional IpAddress As String = "UnKnown", Optional Port As Int64 = 4711) As String
+            Set(value As String)
+                mHostName = MachineName
+                mIpAddress = IpAddress
+                mPort = Port
+                mJSONDATA = value
+            End Set
+        End Property
+
+        Public Property word As String
+            Get
+                Return mName
+            End Get
+            Set(value As String)
+                mName = value
+            End Set
+        End Property
+
+        Public ReadOnly Property Word(Name As String) As PacketData
+            Get
+                mName = Name
+                Return Me
+            End Get
+        End Property
+        Public Property HostName As String
+            Get
+                Return mHostName
+            End Get
+            Set(value As String)
+                mHostName = value
+            End Set
+        End Property
+        Public Property IpAddress As String
+            Get
+                Return mIpAddress
+            End Get
+            Set(value As String)
+                mIpAddress = value
+            End Set
+        End Property
+        Public Property Port As Int64
+            Get
+                Return mPort
+            End Get
+            Set(value As Int64)
+                mPort = value
+            End Set
+        End Property
+    End Class
+End Namespace
