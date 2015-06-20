@@ -1,0 +1,73 @@
+Imports unidex.Interfaces
+
+
+
+Namespace Constants
+    <System.Runtime.Serialization.DataContract()>
+    Public Class EventLogEntry
+        Inherits JSONInherit(Of EventLogEntry)
+        Implements iEventLogEntry
+
+        <System.Runtime.Serialization.DataMember> _
+        Private mEventDate As Date,
+                mFromValue As Object,
+                mToValue As Object,
+                mUser As iUser,
+                mUserName As String,
+                mTarget As iIdentification
+
+        Public Sub New()
+            mEventDate = Date.Now
+        End Sub
+
+        Public Property EventDate As Date Implements iEventLogEntry.EventDate
+            Get
+                Return mEventDate
+            End Get
+            Set(value As Date)
+                mEventDate = value
+            End Set
+        End Property
+        Public Property FromValue As Object Implements iEventLogEntry.FromValue
+            Get
+                Return mFromValue
+            End Get
+            Set(value As Object)
+                mFromValue = value
+            End Set
+        End Property
+        Public Property ToValue As Object Implements iEventLogEntry.ToValue
+            Get
+                Return mToValue
+            End Get
+            Set(value As Object)
+                mToValue = value
+            End Set
+        End Property
+        Public Property User As iUser Implements iEventLogEntry.User
+            Get
+                Return mUser
+            End Get
+            Set(value As iUser)
+                mUser = value
+            End Set
+        End Property
+        Public Property UserName As String Implements iEventLogEntry.UserName
+            Get
+                Return mUserName
+            End Get
+            Set(value As String)
+                mUserName = value
+            End Set
+        End Property
+
+        Public Property Target As iIdentification Implements iEventLogEntry.Target
+            Get
+                Return mTarget
+            End Get
+            Set(value As iIdentification)
+                mTarget = value
+            End Set
+        End Property
+    End Class
+End Namespace
