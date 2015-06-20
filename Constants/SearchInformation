@@ -1,0 +1,328 @@
+
+Imports unidex
+Imports unidex.Interfaces
+
+Namespace Constants
+    Public Structure SearchInformation
+        Implements ISearchInformation
+
+
+        Public mStartOfWord As Int64
+        Public mCurrectPosition As Int64
+        Public mCurrectSeparatorPosition As Int64
+        Public mCurrectWordPosition As Int64
+        Public mLastWordReached As Boolean
+
+        Public mSeparateSpace As Boolean
+        Public mCamelCasing As Boolean
+        Public mReturnComplexType As Boolean
+
+        Public mProcessWord As Boolean
+        Public mCapDetected As Boolean
+        Public mFoundDelimiter As Boolean
+
+        Public mDelimiters As IChars
+        Public mSeparatorItems() As ISeparatorItem
+
+        Delegate Sub DelegateFoundWord(Word As String, ByRef Information As ISearchInformation)
+
+        Public Event FoundWord(Word As String, ByRef Information As ISearchInformation) Implements ISearchInformation.FoundWord
+
+        Public Sub WordFound(Word As String) Implements ISearchInformation.WordFound
+            RaiseEvent FoundWord(Word, Me)
+        End Sub
+
+        Public Sub ConnectCurrentSeparatorsBeforeWordTothePreviousSeparatorsAfterWord() Implements ISearchInformation.ConnectCurrentSeparatorsBeforeWordTotheLastSeparatorsAfterWord
+            Try
+                Me.PreviousSeparator.WordAfter = Me.CurrentSeparator.WordBefore
+                Me.PreviousSeparator.WordAfterIndex = Me.CurrentSeparator.WordBeforeIndex
+            Catch
+            End Try
+        End Sub
+
+        Public Function Parse(Message As String) As ISeparatorItem() Implements ISearchInformation.Parse
+            Return Parse(Message, Me)
+        End Function
+
+        Public Sub StartCompareCharacter(ComparableCharacter As Char) Implements ISearchInformation.StartCompareCharacter
+            Dim Result As New SearchInformation With {.ProcessWord = Me.ProcessWord, .Delimiters = Me.Delimiters, .FoundDelimiter = Me.FoundDelimiter}
+            RaiseEvent CompareCharacter(ComparableCharacter, Result)
+            With Result
+                Me.ProcessWord = .ProcessWord
+                Me.FoundDelimiter = .FoundDelimiter
+            End With
+        End Sub
+
+        Public Event CompareCharacter(ComparableCharacter As Char, ByRef Information As ISearchInformation) Implements ISearchInformation.CompareCharacter
+
+        Public Sub CompareCharacterBase(ComparableCharacter As Char, ByRef Information As ISearchInformation) Implements ISearchInformation.CompareCharacterBase
+            With Information
+                Select Case ComparableCharacter
+                    Case "[" : .ProcessWord = False
+                    Case "]" : .ProcessWord = True
+                    Case .Delimiters.Char1,
+                         .Delimiters.Char2,
+                         .Delimiters.Char3,
+                         .Delimiters.Char4
+                        If .ProcessWord Then .FoundDelimiter = True
+                End Select
+            End With
+        End Sub
+        Public Sub CompareCharacterExtension(ComparableCharacter As Char, ByRef Information As ISearchInformation) Implements ISearchInformation.CompareCharacterExtension
+            With Information
+                Select Case ComparableCharacter
+                    Case .Delimiters.Char5,
+                         .Delimiters.Char6
+                        If .ProcessWord Then .FoundDelimiter = True
+                End Select
+            End With
+        End Sub
+        Public Sub CompareCharacterCamelCase(ComparableCharacter As Char, ByRef Information As ISearchInformation) Implements ISearchInformation.CompareCharacterCamelCase
+            With Information
+                Select Case ComparableCharacter
+                    Case "A" To "Z" : .CapDetected = True
+                End Select
+            End With
+        End Sub
+        Public Shared Function ParseLSVfile(Message As String) As ISeparatorItem()
+            Return Parse(Message, New SearchInformation With {.Delimiters = New LSVDelimiters})
+        End Function
+        Public Shared Function ParseCSVfile(Message As String) As ISeparatorItem()
+            Return Parse(Message, New SearchInformation With {.Delimiters = New CSVDelimiters})
+        End Function
+        Public Shared Function ParseFileName(Message As String) As ISeparatorItem()
+            Return Parse(Message, New SearchInformation With {.Delimiters = New FileNameDelimiters})
+        End Function
+        Public Shared Function ParseSentence(Message As String) As ISeparatorItem()
+            Return Parse(Message, New SearchInformation With {.Delimiters = New SentenceDelimiters})
+        End Function
+        Public Shared Function ParseURL(Message As String) As ISeparatorItem()
+            Return Parse(Message, New SearchInformation With {.Delimiters = New URLDelimiters})
+        End Function
+        Public Shared Function Mold(Data As ISeparatorItem()) As String
+            Dim Output As String = ""
+            For Each PieceOData In Data
+                Try
+                    With PieceOData
+                        Output += .WordBefore & .Separator
+                    End With
+                Catch
+                End Try
+            Next
+            Return Output & Data.Last.WordAfter
+        End Function
+        Public Shared Function Parse(Message As String, ByRef Information As ISearchInformation) As ISeparatorItem()
+            With Information
+                Try
+                    .StartOfWord = 0
+                    .CurrectPosition = 0
+                    .ProcessWord = True
+                    .CapDetected = False
+                    .FoundDelimiter = False
+
+                    Try
+                        RemoveHandler .CompareCharacter, AddressOf .CompareCharacterBase
+                        RemoveHandler .CompareCharacter, AddressOf .CompareCharacterExtension
+                        RemoveHandler .CompareCharacter, AddressOf .CompareCharacterCamelCase
+                    Catch
+                    End Try
+
+                    AddHandler .CompareCharacter, AddressOf .CompareCharacterBase
+                    If .Delimiters.HasExtension Then AddHandler .CompareCharacter, AddressOf .CompareCharacterExtension
+                    If .CamelCasing Then AddHandler .CompareCharacter, AddressOf .CompareCharacterCamelCase
+
+                    For Each ComparableCharacter As Char In Message
+
+                        .StartCompareCharacter(ComparableCharacter)
+                        ParseProcess(ComparableCharacter, Message, Information)
+
+                        .CurrectPosition += 1
+                    Next
+                    .CurrectSeparatorPosition -= 1
+
+                    Dim ItemName = Message.Substring(.StartOfWord, .CurrectPosition - .StartOfWord).Trim
+
+                    .CurrentSeparator.WordAfter = ItemName
+                    .CurrentSeparator.WordAfterIndex = .CurrentSeparator.WordBeforeIndex + 1
+
+                    .LastWordReached = True
+                    .WordFound(ItemName)
+                Catch
+                End Try
+
+                Return .SeparatorItems
+            End With
+        End Function
+
+        Private Shared Sub ParseProcess(DelimiterCharacter As Char, Message As String, ByRef Information As ISearchInformation)
+            With Information
+                If .ProcessWord And (.FoundDelimiter Or .CapDetected And .CamelCasing) Then
+
+                    Dim ItemName = Message.Substring(.StartOfWord, .CurrectPosition - .StartOfWord).Trim
+                    ' If ItemName = "" Then Exit Sub
+                    Dim Item = New SeparatorItem With
+                    {
+                        .Separator = DelimiterCharacter,
+                        .Index = Information.CurrectPosition,
+                        .WordBefore = ItemName,
+                        .WordBeforeIndex = Information.CurrectWordPosition
+                    }
+
+                    Arrays.Array(Of ISeparatorItem).Allocate(.SeparatorItems, Item, .CurrectSeparatorPosition)
+
+                    .ConnectCurrentSeparatorsBeforeWordTotheLastSeparatorsAfterWord()
+                    .CurrectWordPosition += 1
+                    .CurrectSeparatorPosition += 1
+
+                    .WordFound(ItemName)
+
+                    .StartOfWord = (.CurrectPosition + 1)
+
+                    .FoundDelimiter = False
+                    .ProcessWord = True
+                    .CapDetected = False
+                End If
+            End With
+        End Sub
+
+
+
+        Public Property Delimiters As IChars Implements ISearchInformation.Delimiters
+            Get
+                If mDelimiters Is Nothing Then mDelimiters = New SentenceDelimiters
+                Return mDelimiters
+            End Get
+            Set(value As IChars)
+                mDelimiters = value
+            End Set
+        End Property
+        Public Property CamelCasing As Boolean Implements ISearchInformation.CamelCasing
+            Get
+                Return mCamelCasing
+            End Get
+            Set(value As Boolean)
+                mCamelCasing = value
+            End Set
+        End Property
+        Public Property CapDetected As Boolean Implements ISearchInformation.CapDetected
+            Get
+                Return mCapDetected
+            End Get
+            Set(value As Boolean)
+                mCapDetected = value
+            End Set
+        End Property
+        Public Property CurrectPosition As Long Implements ISearchInformation.CurrectPosition
+            Get
+                Return mCurrectPosition
+            End Get
+            Set(value As Long)
+                mCurrectPosition = value
+            End Set
+        End Property
+        Public Property FoundDelimiter As Boolean Implements ISearchInformation.FoundDelimiter
+            Get
+                Return mFoundDelimiter
+            End Get
+            Set(value As Boolean)
+                mFoundDelimiter = value
+            End Set
+        End Property
+        Public Property LastWordReached As Boolean Implements ISearchInformation.LastWordReached
+            Get
+                Return mLastWordReached
+            End Get
+            Set(value As Boolean)
+                mLastWordReached = value
+            End Set
+        End Property
+        Public Property ProcessWord As Boolean Implements ISearchInformation.ProcessWord
+            Get
+                Return mProcessWord
+            End Get
+            Set(value As Boolean)
+                mProcessWord = value
+            End Set
+        End Property
+        Public Property ReturnComplexType As Boolean Implements ISearchInformation.ReturnComplexType
+            Get
+                Return mReturnComplexType
+            End Get
+            Set(value As Boolean)
+                mReturnComplexType = value
+            End Set
+        End Property
+        Public Property SeparateSpace As Boolean Implements ISearchInformation.SeparateSpace
+            Get
+                Return mSeparateSpace
+            End Get
+            Set(value As Boolean)
+                mSeparateSpace = value
+                If mSeparateSpace Then
+                    mDelimiters = New SentenceDelimiters
+                Else
+                    mDelimiters = New FileNameDelimiters
+                End If
+            End Set
+        End Property
+        Public Property SeparatorItems As ISeparatorItem() Implements ISearchInformation.SeparatorItems
+            Get
+                If mSeparatorItems Is Nothing Then mSeparatorItems = New SeparatorItem() {}
+                Return mSeparatorItems
+            End Get
+            Set(value As ISeparatorItem())
+                mSeparatorItems = value
+            End Set
+        End Property
+        Public Property StartOfWord As Long Implements ISearchInformation.StartOfWord
+            Get
+                Return mStartOfWord
+            End Get
+            Set(value As Long)
+                mStartOfWord = value
+            End Set
+        End Property
+
+        Public Property CurrectSeparatorPosition As Long Implements ISearchInformation.CurrectSeparatorPosition
+            Get
+                Return mCurrectSeparatorPosition
+            End Get
+            Set(value As Long)
+                mCurrectSeparatorPosition = value
+            End Set
+        End Property
+
+        Public Property CurrectWordPosition As Long Implements ISearchInformation.CurrectWordPosition
+            Get
+                Return mCurrectWordPosition
+            End Get
+            Set(value As Long)
+                mCurrectWordPosition = value
+            End Set
+        End Property
+
+        Public Property CurrentSeparator As ISeparatorItem Implements ISearchInformation.CurrentSeparator
+            Get
+                Return Me.SeparatorItems(Me.CurrectSeparatorPosition)
+            End Get
+            Set(value As ISeparatorItem)
+                Arrays.Array(Of ISeparatorItem).Allocate(SeparatorItems, value, Me.CurrectSeparatorPosition)
+            End Set
+        End Property
+        Public Property PreviousSeparator As ISeparatorItem Implements ISearchInformation.PreviousSeparator
+            Get
+                Return Me.SeparatorItems(Me.CurrectSeparatorPosition - 1)
+            End Get
+            Set(value As ISeparatorItem)
+                Arrays.Array(Of ISeparatorItem).Allocate(SeparatorItems, value, Me.CurrectSeparatorPosition - 1)
+            End Set
+        End Property
+
+
+
+
+
+
+    End Structure
+
+End Namespace
