@@ -1,0 +1,92 @@
+
+Namespace Constants
+    Public Structure ControlChars
+
+        Public Shared Function RandomCharacter() As Char
+            Return ConvertLongToCharacter(Types.Random.Randomize(0, 65535))
+        End Function
+        Public Shared Function ConvertLongToCharacter(Number As Long) As Char
+            Dim Byte2Value As Byte = Number \ 256
+            Dim Byte1Value As Byte = Number - (Byte2Value * 256)
+
+            Return ConvertByteToCharacter({Byte1Value, Byte2Value})
+        End Function
+        Public Shared Function ConvertCharacterToLong(Letter As Char) As Long
+            Dim Bytes = ConvertCharacterToByte(Letter)
+            Return CInt(Bytes(0)) + (CInt(Bytes(1)) * 256)
+        End Function
+        Public Shared Function ConvertCharacterToByte(Letter As Char) As Byte()
+            Return System.BitConverter.GetBytes(Letter)
+        End Function
+        Public Shared Function ConvertByteToCharacter(Letter As Byte()) As Char
+            Return System.BitConverter.ToChar(Letter, 0)
+        End Function
+        Public Shared Function ConvertStringToByteArray(Convert As String) As Byte()
+            Dim Result() As Byte
+            For Each Character In Convert
+                Dim Bytes = ConvertCharacterToByte(Character)
+                unidex.Arrays.Array(Of Byte).Allocate(Result, Bytes(0))
+                unidex.Arrays.Array(Of Byte).Allocate(Result, Bytes(1))
+            Next
+            Return Result
+        End Function
+        Public Shared Function ConvertByteArrayToString(Convert As Byte()) As String
+            Dim Result As String = ""
+            Dim FirstSecond As Boolean
+            Dim values() As Byte
+            Try
+                For Each Character In Convert
+                    If Not FirstSecond Then
+                        unidex.Arrays.Array(Of Byte).Allocate(values, Character, 0)
+                        FirstSecond = True
+                    Else
+                        unidex.Arrays.Array(Of Byte).Allocate(values, Character, 1)
+                        Result += ConvertByteToCharacter(values)
+                        FirstSecond = False
+                    End If
+                Next
+            Catch
+            End Try
+            Return Result
+        End Function
+
+        Public Shared Function Back() As Char
+            Return "\b"
+        End Function
+        Public Shared Function Cr() As Char
+            Return "\r"
+        End Function
+        Public Shared Function CrLf() As String
+            Return "\r\n"
+        End Function
+        Public Shared Function FormFeed() As Char
+            Return "\f"
+        End Function
+        Public Shared Function Lf() As Char
+            Return "\n"
+        End Function
+        Public Shared Function NewLine()
+            Return "\r\n"
+        End Function
+        Public Shared Function NullChar() As Char
+            Return "\0"
+        End Function
+        Public Shared Function Quote() As Char
+            Return """"
+        End Function
+        Public Shared Function Tab() As Char
+            Return "\t"
+        End Function
+        Public Shared Function VerticalTab() As Char
+            Return "\v"
+        End Function
+
+        Public Shared Function Space(Amount As Long) As String
+            Dim Spaces As String = ""
+            For index As Int64 = 0 To Amount - 1
+                Spaces += " "
+            Next
+            Return Spaces
+        End Function
+    End Structure
+End Namespace
