@@ -1,0 +1,34 @@
+Imports System.IO
+Imports System.Runtime.Serialization.Json
+Imports unidex.Interfaces
+
+
+Namespace Constants
+    <System.Runtime.Serialization.DataContract>
+    Public Class JSONInherit(Of InheritedType As IEncodable)
+        Inherits JSON.JSONControl(Of InheritedType)
+        Implements IEncodable
+
+        Public Shared Narrowing Operator CType(Data As JSONInherit(Of InheritedType)) As String
+            Return Data.StreamToString
+        End Operator
+        Public Shared Widening Operator CType(Stream As MemoryStream) As JSONInherit(Of InheritedType)
+            Return New DataContractJsonSerializer(GetType(InheritedType)).ReadObject(Stream)
+        End Operator
+
+        Public Overloads Function ToStream() As MemoryStream Implements IEncodable.ToStream
+            ToStream = New MemoryStream
+            CType(New DataContractJsonSerializer(GetType(InheritedType)), DataContractJsonSerializer).WriteObject(ToStream, Me)
+        End Function
+        Public Overloads Function Encrypt(Key As String) As String Implements IEncodable.Encrypt
+            Return JSON.Encrypt(Me.StreamToString, Key)
+        End Function
+        Public Overloads Function StreamToString() As String Implements IEncodable.StreamToString
+            Return ControlChars.ConvertByteArrayToString(ToStream.ToArray)
+        End Function
+
+
+    End Class
+
+
+End Namespace
