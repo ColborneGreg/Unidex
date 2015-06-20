@@ -1,0 +1,74 @@
+Imports unidex.Interfaces
+
+Namespace Constants
+    Public Class SeparatorItem
+        Implements ISeparatorItem
+
+        Private mSeparator As Char
+        Private mIndex As Long
+        Private mWordBefore As String
+        Private mWordBeforeIndex As Long
+        Private mWordAfter As String
+        Private mWordAfterIndex As Long
+
+        Public Overrides Function ToString() As String
+            Return Separator
+        End Function
+
+        Public Shared Narrowing Operator CType(SeparatorItem As SeparatorItem) As Char
+            Return SeparatorItem.Separator
+        End Operator
+        Public Shared Narrowing Operator CType(SeparatorItem As SeparatorItem) As String
+            Return SeparatorItem.WordBefore
+        End Operator
+
+        Public Property Index As Long Implements ISeparatorItem.Index
+            Get
+                Return mIndex
+            End Get
+            Set(value As Long)
+                mIndex = value
+            End Set
+        End Property
+        Public Property Separator As Char Implements ISeparatorItem.Separator
+            Get
+                Return mSeparator
+            End Get
+            Set(value As Char)
+                mSeparator = value
+            End Set
+        End Property
+        Public Property WordAfter As String Implements ISeparatorItem.WordAfter
+            Get
+                Return mWordAfter
+            End Get
+            Set(value As String)
+                mWordAfter = value
+            End Set
+        End Property
+        Public Property WordAfterIndex As Long Implements ISeparatorItem.WordAfterIndex
+            Get
+                Return mWordAfterIndex
+            End Get
+            Set(value As Long)
+                mWordAfterIndex = value
+            End Set
+        End Property
+        Public Property WordBefore As String Implements ISeparatorItem.WordBefore
+            Get
+                Return mWordBefore
+            End Get
+            Set(value As String)
+                mWordBefore = value
+            End Set
+        End Property
+        Public Property WordBeforeIndex As Long Implements ISeparatorItem.WordBeforeIndex
+            Get
+                Return mWordBeforeIndex
+            End Get
+            Set(value As Long)
+                mWordBeforeIndex = value
+            End Set
+        End Property
+    End Class
+End Namespace
