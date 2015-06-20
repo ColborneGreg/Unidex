@@ -1,0 +1,152 @@
+Namespace Constants
+    Public Class MonthConverter
+        Inherits unidex.Extension
+
+        Private Shared mConverter As New MonthConverter
+        Private Shared SysUser = New Directory.User("SYSTeM", False, "ABSOLUTE")
+        Public Sub New()
+            Me.ʴn("January", SysUser) = 1
+            Me.ʴn("February", SysUser) = 2
+            Me.ʴn("March", SysUser) = 3
+            Me.ʴn("April", SysUser) = 4
+            Me.ʴn("May", SysUser) = 5
+            Me.ʴn("June", SysUser) = 6
+            Me.ʴn("July", SysUser) = 7
+            Me.ʴn("August", SysUser) = 8
+            Me.ʴn("September", SysUser) = 9
+            Me.ʴn("October", SysUser) = 10
+            Me.ʴn("November", SysUser) = 11
+            Me.ʴn("December", SysUser) = 12
+        End Sub
+
+        Public Shared ReadOnly Property Month(Index As Int64) As String
+            Get
+                Return {"January", "February", "March",
+                        "April", "May", "June",
+                        "July", "August", "September",
+                        "October", "November", "December"}(Index)
+            End Get
+        End Property
+
+        Public Shared Property Source As MonthConverter
+            Get
+                Try
+                    If mConverter Is Nothing Then Throw New Exception
+                Catch
+                    mConverter = New MonthConverter
+                End Try
+                Return mConverter
+            End Get
+            Set(value As MonthConverter)
+                mConverter = value
+            End Set
+        End Property
+
+        Public Shared Property MonthAsIndex(Name As String) As Int16
+            Get
+                Return Source.ʴn(Name, SysUser)
+            End Get
+            Set(value As Int16)
+                Source.ʴn(Name, SysUser) = value
+            End Set
+        End Property
+
+        Public Shared Property January As Int16
+            Get
+                Return Source.ʴn("January", SysUser)
+            End Get
+            Set(value As Int16)
+                Source.ʴn("January", SysUser) = value
+            End Set
+        End Property
+        Public Shared Property February As Int16
+            Get
+                Return Source.ʴn("February", SysUser)
+            End Get
+            Set(value As Int16)
+                Source.ʴn("February", SysUser) = value
+            End Set
+        End Property
+        Public Shared Property March As Int16
+            Get
+                Return Source.ʴn("March", SysUser)
+            End Get
+            Set(value As Int16)
+                Source.ʴn("March", SysUser) = value
+            End Set
+        End Property
+        Public Shared Property April As Int16
+            Get
+                Return Source.ʴn("April", SysUser)
+            End Get
+            Set(value As Int16)
+                Source.ʴn("April", SysUser) = value
+            End Set
+        End Property
+        Public Shared Property May As Int16
+            Get
+                Return Source.ʴn("May", SysUser)
+            End Get
+            Set(value As Int16)
+                Source.ʴn("May", SysUser) = value
+            End Set
+        End Property
+        Public Shared Property June As Int16
+            Get
+                Return Source.ʴn("June", SysUser)
+            End Get
+            Set(value As Int16)
+                Source.ʴn("June", SysUser) = value
+            End Set
+        End Property
+        Public Shared Property July As Int16
+            Get
+                Return Source.ʴn("July", SysUser)
+            End Get
+            Set(value As Int16)
+                Source.ʴn("July", SysUser) = value
+            End Set
+        End Property
+        Public Shared Property August As Int16
+            Get
+                Return Source.ʴn("August", SysUser)
+            End Get
+            Set(value As Int16)
+                Source.ʴn("August", SysUser) = value
+            End Set
+        End Property
+        Public Shared Property September As Int16
+            Get
+                Return Source.ʴn("September", SysUser)
+            End Get
+            Set(value As Int16)
+                Source.ʴn("September", SysUser) = value
+            End Set
+        End Property
+        Public Shared Property October As Int16
+            Get
+                Return Source.ʴn("October", SysUser)
+            End Get
+            Set(value As Int16)
+                Source.ʴn("October", SysUser) = value
+            End Set
+        End Property
+        Public Shared Property November As Int16
+            Get
+                Return Source.ʴn("November", SysUser)
+            End Get
+            Set(value As Int16)
+                Source.ʴn("November", SysUser) = value
+            End Set
+        End Property
+        Public Shared Property December As Int16
+            Get
+                Return Source.ʴn("December", SysUser)
+            End Get
+            Set(value As Int16)
+                Source.ʴn("November", SysUser) = value
+            End Set
+        End Property
+
+    End Class
+End Namespace
