@@ -1,0 +1,98 @@
+
+Namespace OldStructures
+    <System.Runtime.Serialization.DataContract>
+    Public Class MutexInformation
+        Implements IDisposable
+
+        <System.Runtime.Serialization.DataMember> Private mMutex As System.Threading.Mutex
+
+        ''' <summary> Tells the next thread the current object is in use. </summary>
+        Public Sub WaitOne()
+            Mutex.WaitOne()
+        End Sub
+        ''' <summary> Releases the object so other threads can access the current object. </summary>
+        Public Sub Release()
+            Try
+                Mutex.ReleaseMutex()
+            Catch
+            End Try
+        End Sub
+        ''' <summary> This allows for a thread to wait until the thread has released the current object. </summary>
+        Public Sub WaitForTurn()
+            CheckMutex()
+            Mutex.WaitOne()
+        End Sub
+
+        Public Function IsActive() As Boolean
+            Try
+                Mutex.WaitOne()
+                Mutex.ReleaseMutex()
+                Return False
+            Catch ex As Exception
+                Return True
+            End Try
+        End Function
+
+        Public Property Mutex As System.Threading.Mutex
+            Get
+                If mMutex Is Nothing Then mMutex = New System.Threading.Mutex
+                Return mMutex
+            End Get
+            Set(value As System.Threading.Mutex)
+                mMutex = value
+            End Set
+        End Property
+
+        ''' <summary> Waits for the thread that has the current object to release the object for this threads use. </summary>
+        Public Function CheckMutex() As System.Threading.Mutex
+            CheckMutex(Mutex)
+            Return Mutex
+        End Function
+        ''' <summary> Waits for the thread that has the current object to release the object for this threads use. </summary>
+        Public Shared Function CheckMutex(Mutex As System.Threading.Mutex) As System.Threading.Mutex
+            Do
+                Try
+                    Mutex.WaitOne()
+                    Mutex.ReleaseMutex()
+                    Exit Do
+                Catch ex As Exception
+
+                End Try
+            Loop
+            Return Mutex
+        End Function
+
+#Region "IDisposable Support"
+        Private disposedValue As Boolean ' To detect redundant calls
+
+        ' IDisposable
+        Protected Overridable Sub Dispose(disposing As Boolean)
+            If Not Me.disposedValue Then
+                If disposing Then
+                    ' TODO: dispose managed state (managed objects).
+                End If
+
+                ' TODO: free unmanaged resources (unmanaged objects) and override Finalize() below.
+                ' TODO: set large fields to null.
+            End If
+            Me.disposedValue = True
+        End Sub
+
+        ' TODO: override Finalize() only if Dispose(ByVal disposing As Boolean) above has code to free unmanaged resources.
+        'Protected Overrides Sub Finalize()
+        '    ' Do not change this code.  Put cleanup code in Dispose(ByVal disposing As Boolean) above.
+        '    Dispose(False)
+        '    MyBase.Finalize()
+        'End Sub
+
+        ' This code added by Visual Basic to correctly implement the disposable pattern.
+        Public Sub Dispose() Implements IDisposable.Dispose
+            ' Do not change this code.  Put cleanup code in Dispose(disposing As Boolean) above.
+            Dispose(True)
+            GC.SuppressFinalize(Me)
+        End Sub
+#End Region
+
+    End Class
+
+End Namespace
