@@ -1,0 +1,485 @@
+Public Class Globalization
+
+    Private Shared _Shared As Globalization
+    Private Shared myBlackHole As unidex.Extension
+    Private Shared SysUser = New Directory.User("SYSTeM", False, "ABSOLUTE")
+
+    Public Shared Property SharedInstance As Globalization
+        Get
+            If _Shared Is Nothing Then _Shared = New Globalization
+            Return _Shared
+        End Get
+        Set(value As Globalization)
+            _Shared = value
+        End Set
+    End Property
+
+    Public Shared Property Translate(DefaultLangaugeValue As String) As String
+        Get
+            Return myBlackHole.ʴs(DefaultLangaugeValue, SysUser)
+        End Get
+        Set(value As String)
+            myBlackHole.ʴs(DefaultLangaugeValue, SysUser) = value
+        End Set
+    End Property
+
+
+    Public Sub New()
+        myBlackHole = New unidex.Extension With {.Name = "Dido"}
+    End Sub
+
+    <Obsolete>
+    Public Property OnlineContext As String
+        Get
+            If myBlackHole.ʴs("OnlineContext", SysUser) = "" Then
+                myBlackHole.ʴs("OnlineContext", SysUser) = "online"
+            End If
+            Return myBlackHole.ʴs("OnlineContext", SysUser)
+        End Get
+        Set(value As String)
+            myBlackHole.ʴs("OnlineContext", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public Property OneDriveContext As String
+        Get
+            If myBlackHole.ʴs("OneDriveContext", SysUser) = "" Then
+                myBlackHole.ʴs("OneDriveContext", SysUser) = "OneDrive"
+            End If
+            Return myBlackHole.ʴs("OneDriveContext", SysUser)
+        End Get
+        Set(value As String)
+            myBlackHole.ʴs("OneDriveContext", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public Property LocalStorageContext As String
+        Get
+            If myBlackHole.ʴs("LocalStorageContext", SysUser) = "" Then
+                myBlackHole.ʴs("LocalStorageContext", SysUser) = "local storage"
+            End If
+            Return myBlackHole.ʴs("LocalStorageContext", SysUser)
+        End Get
+        Set(value As String)
+            myBlackHole.ʴs("LocalStorageContext", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public ReadOnly Property AccessingFile(Context As String, Optional FileName As String = "") As String
+        Get
+            If myBlackHole.ʴs("AccessingFilePart1", SysUser) = "" Then
+                myBlackHole.ʴs("AccessingFilePart1", SysUser) = "Accessing "
+                myBlackHole.ʴs("AccessingFilePart2", SysUser) = " file "
+            End If
+            Return myBlackHole.ʴs("AccessingFilePart1", SysUser) & Context & myBlackHole.ʴs("AccessingFilePart2", SysUser) & FileName
+        End Get
+    End Property
+    <Obsolete>
+    Public WriteOnly Property AccessingFilePart1 As String
+        Set(value As String)
+            myBlackHole.ʴs("AccessingFilePart1", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public WriteOnly Property AccessingFilePart2 As String
+        Set(value As String)
+            myBlackHole.ʴs("AccessingFilePart2", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public ReadOnly Property AccessingDataFailed(Context As String) As String
+        Get
+            If myBlackHole.ʴs("AccessingPart1", SysUser) = "" Then
+                myBlackHole.ʴs("AccessingPart1", SysUser) = "Accessing "
+                myBlackHole.ʴs("AccessingPart2", SysUser) = " data failed"
+            End If
+            Return myBlackHole.ʴs("AccessingPart1", SysUser) & Context & myBlackHole.ʴs("AccessingPart2", SysUser)
+        End Get
+    End Property
+    <Obsolete>
+    Public WriteOnly Property AccessingPart1 As String
+        Set(value As String)
+            myBlackHole.ʴs("AccessingPart1", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public WriteOnly Property AccessingPart2 As String
+        Set(value As String)
+            myBlackHole.ʴs("AccessingPart2", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public ReadOnly Property BackingUpData(Context As String, Optional FileName As String = "") As String
+        Get
+            If myBlackHole.ʴs("BackingUpDataPart1", SysUser) = "" Then
+                myBlackHole.ʴs("BackingUpDataPart1", SysUser) = "Backing up "
+                myBlackHole.ʴs("BackingUpDataPart2", SysUser) = " data  "
+            End If
+            Return myBlackHole.ʴs("BackingUpDataPart1", SysUser) & Context & myBlackHole.ʴs("BackingUpDataPart2", SysUser) & FileName
+        End Get
+    End Property
+    <Obsolete>
+    Public WriteOnly Property BackingUpDataPart1 As String
+        Set(value As String)
+            myBlackHole.ʴs("BackingUpDataPart1", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public WriteOnly Property BackingUpDataPart2 As String
+        Set(value As String)
+            myBlackHole.ʴs("BackingUpDataPart2", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public ReadOnly Property MergingData(Context As String) As String
+        Get
+            If myBlackHole.ʴs("MergingDataPart1", SysUser) = "" Then
+                myBlackHole.ʴs("MergingDataPart1", SysUser) = "Merging "
+                myBlackHole.ʴs("MergingDataPart2", SysUser) = " data with current session  "
+            End If
+            Return myBlackHole.ʴs("MergingDataPart1", SysUser) & Context & myBlackHole.ʴs("MergingDataPart2", SysUser)
+        End Get
+    End Property
+    <Obsolete>
+    Public WriteOnly Property MergingDataPart1 As String
+        Set(value As String)
+            myBlackHole.ʴs("MergingDataPart1", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public WriteOnly Property MergingDataPart2 As String
+        Set(value As String)
+            myBlackHole.ʴs("MergingDataPart2", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public ReadOnly Property OpeningFile(Context As String, Optional FileName As String = "") As String
+        Get
+            If myBlackHole.ʴs("OpeningFileDataPart1", SysUser) = "" Then
+                myBlackHole.ʴs("OpeningFileDataPart1", SysUser) = "Opening "
+                myBlackHole.ʴs("OpeningFileDataPart2", SysUser) = " file  "
+            End If
+            Return myBlackHole.ʴs("OpeningFileDataPart1", SysUser) & Context & myBlackHole.ʴs("OpeningFileDataPart2", SysUser) & FileName
+        End Get
+    End Property
+    <Obsolete>
+    Public WriteOnly Property OpeningFileDataPart1 As String
+        Set(value As String)
+            myBlackHole.ʴs("OpeningFileDataPart1", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public WriteOnly Property OpeningFileDataPart2 As String
+        Set(value As String)
+            myBlackHole.ʴs("OpeningFileDataPart2", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public ReadOnly Property RetreivingOldData(Context As String) As String
+        Get
+            If myBlackHole.ʴs("RetreivingOldDataPart1", SysUser) = "" Then
+                myBlackHole.ʴs("RetreivingOldDataPart1", SysUser) = "Retreiving old "
+                myBlackHole.ʴs("RetreivingOldDataPart2", SysUser) = " data  "
+            End If
+            Return myBlackHole.ʴs("RetreivingOldDataPart1", SysUser) & Context & myBlackHole.ʴs("RetreivingOldDataPart2", SysUser)
+        End Get
+    End Property
+    <Obsolete>
+    Public WriteOnly Property RetreivingOldDataPart1 As String
+        Set(value As String)
+            myBlackHole.ʴs("RetreivingOldDataPart1", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public WriteOnly Property RetreivingOldDataPart2 As String
+        Set(value As String)
+            myBlackHole.ʴs("RetreivingOldDataPart2", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public ReadOnly Property SavingFileTo(Context As String, Optional FileName As String = "") As String
+        Get
+            If myBlackHole.ʴs("SavingFilePart1", SysUser) = "" Then
+                myBlackHole.ʴs("SavingFilePart1", SysUser) = "Saving file to "
+            End If
+            Return myBlackHole.ʴs("SavingFilePart1", SysUser) & Context & " " & FileName
+        End Get
+    End Property
+    <Obsolete>
+    Public WriteOnly Property SavingFilePart1 As String
+        Set(value As String)
+            myBlackHole.ʴs("SavingFilePart1", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public ReadOnly Property FileDoesNotExist(Context As String) As String
+        Get
+            If myBlackHole.ʴs("FileDoesNotExistPart1", SysUser) = "" Then
+                myBlackHole.ʴs("FileDoesNotExistPart1", SysUser) = " file does not exist yet "
+            End If
+            Return Context & myBlackHole.ʴs("FileDoesNotExistPart1", SysUser)
+        End Get
+    End Property
+    <Obsolete>
+    Public WriteOnly Property FileDoesNotExistPart1 As String
+        Set(value As String)
+            myBlackHole.ʴs("FileDoesNotExistPart1", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public Property DataMergeComplete As String
+        Get
+            If myBlackHole.ʴs("DataMergeComplete", SysUser) = "" Then
+                myBlackHole.ʴs("DataMergeComplete", SysUser) = "Data merge complete"
+            End If
+            Return myBlackHole.ʴs("DataMergeComplete", SysUser)
+        End Get
+        Set(value As String)
+            myBlackHole.ʴs("DataMergeComplete", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public Property TestingInternetConnection As String
+        Get
+            If myBlackHole.ʴs("TestingInternetConnection", SysUser) = "" Then
+                myBlackHole.ʴs("TestingInternetConnection", SysUser) = "Testing internet connection"
+            End If
+            Return myBlackHole.ʴs("TestingInternetConnection", SysUser)
+        End Get
+        Set(value As String)
+            myBlackHole.ʴs("TestingInternetConnection", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public Property Connected As String
+        Get
+            If myBlackHole.ʴs("Connected", SysUser) = "" Then
+                myBlackHole.ʴs("Connected", SysUser) = "Connected"
+            End If
+            Return myBlackHole.ʴs("Connected", SysUser)
+        End Get
+        Set(value As String)
+            myBlackHole.ʴs("Connected", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public Property FileNameIsMissing As String
+        Get
+            If myBlackHole.ʴs("FileNameIsMissing", SysUser) = "" Then
+                myBlackHole.ʴs("FileNameIsMissing", SysUser) = "File name is missing!"
+            End If
+            Return myBlackHole.ʴs("FileNameIsMissing", SysUser)
+        End Get
+        Set(value As String)
+            myBlackHole.ʴs("FileNameIsMissing", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public Property FileNameNotSet As String
+        Get
+            If myBlackHole.ʴs("FileNameNotSet", SysUser) = "" Then
+                myBlackHole.ʴs("FileNameNotSet", SysUser) = "File name was not set!"
+            End If
+            Return myBlackHole.ʴs("FileNameNotSet", SysUser)
+        End Get
+        Set(value As String)
+            myBlackHole.ʴs("FileNameNotSet", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public Property FileNotFound As String
+        Get
+            If myBlackHole.ʴs("FileNotFound", SysUser) = "" Then
+                myBlackHole.ʴs("FileNotFound", SysUser) = "File not found! Path:"
+            End If
+            Return myBlackHole.ʴs("FileNotFound", SysUser) & " "
+        End Get
+        Set(value As String)
+            myBlackHole.ʴs("FileNotFound", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public Property FailedToLoadFile As String
+        Get
+            If myBlackHole.ʴs("FailedToLoadFile", SysUser) = "" Then
+                myBlackHole.ʴs("FailedToLoadFile", SysUser) = "Failed to load file!"
+            End If
+            Return myBlackHole.ʴs("FailedToLoadFile", SysUser)
+        End Get
+        Set(value As String)
+            myBlackHole.ʴs("FailedToLoadFile", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public Property WasOpenedFromOneDrive As String
+        Get
+            If myBlackHole.ʴs("WasOpenedFromOneDrive", SysUser) = "" Then
+                myBlackHole.ʴs("WasOpenedFromOneDrive", SysUser) = "was opened from OneDrive"
+            End If
+            Return " " & myBlackHole.ʴs("WasOpenedFromOneDrive", SysUser)
+        End Get
+        Set(value As String)
+            myBlackHole.ʴs("WasOpenedFromOneDrive", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public Property WasOpenedFromLocalStorage As String
+        Get
+            If myBlackHole.ʴs("WasOpenedFromLocalStorage", SysUser) = "" Then
+                myBlackHole.ʴs("WasOpenedFromLocalStorage", SysUser) = "was opened from Local Storage"
+            End If
+            Return " " & myBlackHole.ʴs("WasOpenedFromLocalStorage", SysUser)
+        End Get
+        Set(value As String)
+            myBlackHole.ʴs("WasOpenedFromLocalStorage", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public Property WasOpenedFromRoamingStorage As String
+        Get
+            If myBlackHole.ʴs("WasOpenedFromRoamingStorage", SysUser) = "" Then
+                myBlackHole.ʴs("WasOpenedFromRoamingStorage", SysUser) = "was opened Roaming Storage"
+            End If
+            Return " " & myBlackHole.ʴs("WasOpenedFromRoamingStorage", SysUser)
+        End Get
+        Set(value As String)
+            myBlackHole.ʴs("WasOpenedFromRoamingStorage", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public Property FileNodeExtensionOpenOrCreateFail As String
+        Get
+            If myBlackHole.ʴs("FileNodeExtensionOpenOrCreateFail", SysUser) = "" Then
+                myBlackHole.ʴs("FileNodeExtensionOpenOrCreateFail", SysUser) = "File node extension open or create procedure failed!"
+            End If
+            Return myBlackHole.ʴs("FileNodeExtensionOpenOrCreateFail", SysUser) & " "
+        End Get
+        Set(value As String)
+            myBlackHole.ʴs("FileNodeExtensionOpenOrCreateFail", SysUser) = value
+        End Set
+    End Property
+
+
+
+    <Obsolete>
+    Public Property WasSavedToOneDrive As String
+        Get
+            If myBlackHole.ʴs("WasSavedToOneDrive", SysUser) = "" Then
+                myBlackHole.ʴs("WasSavedToOneDrive", SysUser) = "was saved to OneDrive"
+            End If
+            Return " " & myBlackHole.ʴs("WasSavedToOneDrive", SysUser)
+        End Get
+        Set(value As String)
+            myBlackHole.ʴs("WasSavedToOneDrive", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public Property WasSavedToLocalStorage As String
+        Get
+            If myBlackHole.ʴs("WasSavedToLocalStorage", SysUser) = "" Then
+                myBlackHole.ʴs("WasSavedToLocalStorage", SysUser) = "was saved to Local Storage"
+            End If
+            Return " " & myBlackHole.ʴs("WasSavedToLocalStorage", SysUser)
+        End Get
+        Set(value As String)
+            myBlackHole.ʴs("WasSavedToLocalStorage", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public Property WasSavedToRoamingStorage As String
+        Get
+            If myBlackHole.ʴs("WasSavedToRoamingStorage", SysUser) = "" Then
+                myBlackHole.ʴs("WasSavedToRoamingStorage", SysUser) = "was saved to Roaming Storage"
+            End If
+            Return " " & myBlackHole.ʴs("WasSavedToRoamingStorage", SysUser)
+        End Get
+        Set(value As String)
+            myBlackHole.ʴs("WasSavedToRoamingStorage", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public Property FileNodeExtensionSaveFail As String
+        Get
+            If myBlackHole.ʴs("FileNodeExtensionSaveFail", SysUser) = "" Then
+                myBlackHole.ʴs("FileNodeExtensionSaveFail", SysUser) = "File node extension save procedure failed!"
+            End If
+            Return myBlackHole.ʴs("FileNodeExtensionSaveFail", SysUser) & " "
+        End Get
+        Set(value As String)
+            myBlackHole.ʴs("FileNodeExtensionSaveFail", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public Property RoamingFileSaveFail As String
+        Get
+            If myBlackHole.ʴs("RoamingFileSaveFail", SysUser) = "" Then
+                myBlackHole.ʴs("RoamingFileSaveFail", SysUser) = "Romaing file save failed!"
+            End If
+            Return myBlackHole.ʴs("RoamingFileSaveFail", SysUser) & " "
+        End Get
+        Set(value As String)
+            myBlackHole.ʴs("RoamingFileSaveFail", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public Property BackupFileNameNotSet As String
+        Get
+            If myBlackHole.ʴs("BackupFileNameNotSet", SysUser) = "" Then
+                myBlackHole.ʴs("BackupFileNameNotSet", SysUser) = "Backup file name not set"
+            End If
+            Return myBlackHole.ʴs("BackupFileNameNotSet", SysUser)
+        End Get
+        Set(value As String)
+            myBlackHole.ʴs("BackupFileNameNotSet", SysUser) = value
+        End Set
+    End Property
+
+    <Obsolete>
+    Public Property UploadingDataToOneDrive As String
+        Get
+            If myBlackHole.ʴs("UploadingDataToOneDrive", SysUser) = "" Then
+                myBlackHole.ʴs("UploadingDataToOneDrive", SysUser) = "Uploading data to OneDrive"
+            End If
+            Return myBlackHole.ʴs("UploadingDataToOneDrive", SysUser) & " "
+        End Get
+        Set(value As String)
+            myBlackHole.ʴs("UploadingDataToOneDrive", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public Property PreparingDataForOneDrive As String
+        Get
+            If myBlackHole.ʴs("PreparingDataForOneDrive", SysUser) = "" Then
+                myBlackHole.ʴs("PreparingDataForOneDrive", SysUser) = "Preparing data for OneDrive"
+            End If
+            Return myBlackHole.ʴs("PreparingDataForOneDrive", SysUser) & " "
+        End Get
+        Set(value As String)
+            myBlackHole.ʴs("PreparingDataForOneDrive", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public Property OneDriveSaveFail As String
+        Get
+            If myBlackHole.ʴs("OneDriveSaveFail", SysUser) = "" Then
+                myBlackHole.ʴs("OneDriveSaveFail", SysUser) = "OneDrive save failed!"
+            End If
+            Return myBlackHole.ʴs("OneDriveSaveFail", SysUser) & " "
+        End Get
+        Set(value As String)
+            myBlackHole.ʴs("OneDriveSaveFail", SysUser) = value
+        End Set
+    End Property
+    <Obsolete>
+    Public Property FileNodeSaveFail As String
+        Get
+            If myBlackHole.ʴs("FileNodeSaveFail", SysUser) = "" Then
+                myBlackHole.ʴs("FileNodeSaveFail", SysUser) = "File node save procedure failed!"
+            End If
+            Return myBlackHole.ʴs("FileNodeSaveFail", SysUser) & " "
+        End Get
+        Set(value As String)
+            myBlackHole.ʴs("FileNodeSaveFail", SysUser) = value
+        End Set
+    End Property
+End Class
