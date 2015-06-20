@@ -1,0 +1,283 @@
+Imports System.IO
+Imports System.Runtime.Serialization.Json
+Imports System.Text
+Imports Unidex
+Imports unidex.Interfaces
+
+Namespace Constants
+    Public Class JSON
+
+        Public Class JSONControl(Of InheritedType)
+            Public Shared Function Encrypt(inbound As InheritedType, Key As String) As String
+                Return JSON.Encrypt(StreamToString(inbound), Key)
+            End Function
+            Public Shared Function StreamToString(inbound As InheritedType) As String
+                Return ControlChars.ConvertByteArrayToString(ToStream(inbound).ToArray)
+            End Function
+            Public Shared Function ToStream(inbound As InheritedType) As MemoryStream
+                ToStream = New MemoryStream
+                CType(New DataContractJsonSerializer(GetType(InheritedType)), DataContractJsonSerializer).WriteObject(ToStream, inbound)
+            End Function
+            Public Shared Function Decrypt(SerializedJson As String, Key As String) As InheritedType
+                Return StringToStream(JSON.Decrypt(SerializedJson, Key))
+            End Function
+            Public Shared Function StringToStream(SerializedJson As String) As InheritedType
+                Return FromStream(New MemoryStream(ControlChars.ConvertStringToByteArray(SerializedJson)))
+            End Function
+            Public Shared Function FromStream(Stream As MemoryStream) As InheritedType
+                Return New DataContractJsonSerializer(GetType(Byte)).ReadObject(Stream)
+            End Function
+        End Class
+
+        Public Class Bytes
+            Inherits JSONControl(Of Byte)
+        End Class
+        Public Class ByteArrays
+            Inherits JSONControl(Of Byte())
+        End Class
+        Public Class Booleans
+            Inherits JSONControl(Of Boolean)
+        End Class
+        Public Class Decimals
+            Inherits JSONControl(Of Decimal)
+        End Class
+        Public Class MemoryStreams
+            Inherits JSONControl(Of MemoryStream)
+        End Class
+        Public Class Numbers
+            Inherits JSONControl(Of Long)
+        End Class
+        Public Class Objects
+            Inherits JSONControl(Of Object)
+        End Class
+        Public Class Strings
+            Inherits JSONControl(Of String)
+        End Class
+        Public Class DateTimes
+            Inherits JSONControl(Of DateTime)
+        End Class
+        Public Class StringArrays
+            Inherits JSONControl(Of String())
+        End Class
+ 
+#Region "Encode"
+
+
+
+
+
+
+
+
+
+        Public Shared Function StringToStream(Input As String) As MemoryStream
+            Return New MemoryStream(ControlChars.ConvertStringToByteArray(Input))
+        End Function
+        Public Shared Function StreamToString(Stream As MemoryStream) As String
+            Return ControlChars.ConvertByteArrayToString(Stream.ToArray)
+        End Function
+
+
+        Private Shared Function ByteToChar(Value As Byte()) As Char
+            Return ControlChars.ConvertByteToCharacter(Value)
+        End Function
+        Private Shared Function CharToByte(Value As Char) As Byte()
+            Return ControlChars.ConvertCharacterToByte(Value)
+        End Function
+#End Region
+
+
+
+        Private Shared mCharacters As String()
+        Private Shared mValue As String()
+        Private Shared moutput As String()
+
+        Private Shared Sub Insert(Character As Char, Value As String, output As String)
+            Allocate(mCharacters, Character)
+            Allocate(mValue, Value)
+            Allocate(moutput, output)
+        End Sub
+
+        Private Shared Function LastIndexOf(TheArray() As String) As Int64
+            Try
+                Return TheArray.Length
+            Catch
+                Return 0
+            End Try
+        End Function
+        Private Shared Function Allocate(ByRef TheArray() As String, ByVal Value As String) As String()
+            Return Allocate(TheArray, Value, LastIndexOf(TheArray))
+        End Function
+        Private Shared Function Allocate(ByRef TheArray() As String, ByVal Value As String, ByRef Index As Int64) As String()
+            If Value Is Nothing Then Throw New Exception
+            Try
+                TheArray(Index) = Value
+            Catch
+                ReDim Preserve TheArray(Index)
+                TheArray(Index) = Value
+            End Try
+            Return TheArray
+        End Function
+
+
+        Public Shared Function Encrypt(Word As String, Key As String) As String
+            Try
+                Dim ReturnValue = ""
+                Dim FrontKey = ""
+                Dim Multiplier As Int64 = Types.Random.Randomize(1, 9)
+                Dim KeyIndex = 0
+
+                ReturnValue = ""
+                FrontKey = ""
+                Try
+                    For Index = 0 To Word.Length - 1
+                        Try
+                            ReturnValue += EncryptChar(Word.Chars(Index), Key.Chars(KeyIndex), 1, Multiplier)
+                            KeyIndex += 1
+                            If KeyIndex >= Key.Length Then KeyIndex = 0
+                        Catch
+                        End Try
+                    Next
+
+                    FrontKey = Multiplier
+
+                Catch
+                End Try
+
+
+
+                Dim Value1 As String = ""
+                For Each Character In FrontKey
+                    Value1 &= ControlChars.ConvertLongToCharacter(ControlChars.ConvertCharacterToLong(Character) + 360)
+                Next
+
+                Return Value1 & ReturnValue
+            Catch ex As Exception
+                Return ex.Message
+            End Try
+        End Function
+        Private Shared Function EncryptCharRandomChars() As String
+            Dim FirstChar As Char = ControlChars.RandomCharacter()
+            Dim FirstCharIndex As Int64 = ControlChars.ConvertCharacterToLong(FirstChar)
+        End Function
+        Private Shared Function EncryptCharValidation(Attempting As Int64) As String
+            Try
+                Dim Character = ControlChars.ConvertLongToCharacter(Attempting)
+                Dim CharString = " " & Character & " "
+
+                Dim ConvertedIndex = ControlChars.ConvertCharacterToLong(CharString.Trim)
+
+                If Attempting = ConvertedIndex Then
+                    Return ControlChars.ConvertLongToCharacter(Attempting)
+                Else
+                    Dim Value1 As Int64 = Attempting / 2
+                    Dim Value2 As Int64 = Attempting - Value1
+                    Return EncryptCharValidation(Value1) & EncryptCharValidation(Value2)
+                End If
+            Catch ex As Exception
+                Return ""
+            End Try
+        End Function
+
+        Private Shared Function EncryptCharItiration(AttemptOne As Int64) As String
+            If AttemptOne <= 65535 Then
+                Return EncryptCharValidation(AttemptOne)
+            Else
+                Return EncryptCharItiration(AttemptOne - 65535) & ControlChars.ConvertLongToCharacter(65535)
+            End If
+        End Function
+
+        Private Shared Function EncryptChar(Value As Char, key As Char, SpreadLength As Int64, ByRef SpreadMultiplier As Int64) As String
+            Dim IndexValue = ControlChars.ConvertCharacterToLong(Value)
+            Dim IndexKey = ControlChars.ConvertCharacterToLong(key)
+
+            Dim ReturnValue As String = EncryptCharItiration((IndexValue + IndexKey) * SpreadMultiplier)
+            Dim ReturnPrefix As String = ReturnValue.Length.ToString.Length & ReturnValue.Length
+
+            Dim Value1 As String = ""
+            For Each Character In ReturnPrefix
+                Value1 &= ControlChars.ConvertLongToCharacter(ControlChars.ConvertCharacterToLong(Character) + 360)
+            Next
+
+            Return Value1 & ReturnValue
+        End Function
+
+        Private Shared Function DecryptChar(Value As String, Key As Char, SpreadLength As Int64, SpreadMultiplier As Int64) As Char
+            Dim IndexKey = ControlChars.ConvertCharacterToLong(Key)
+            Dim AcculatedValue As Int64 = 0
+
+            For Each Character In Value
+                AcculatedValue += ControlChars.ConvertCharacterToLong(Character)
+            Next
+
+            Dim ModifiedValue As Int64 = AcculatedValue / SpreadMultiplier
+            Dim IndexValue As Int64 = ModifiedValue - IndexKey
+
+            Return ControlChars.ConvertLongToCharacter(IndexValue)
+        End Function
+        Private Shared Function ZeroPadder(Word As String, digits As Int64) As String
+            Try
+                Dim Length = digits - Word.Length
+                Dim ReturnValue = ""
+
+                For Index = 0 To Length - 1
+                    ReturnValue += "0"
+                Next
+
+                Return ReturnValue & Word
+            Catch
+                Return "00"
+            End Try
+        End Function
+
+        Public Shared Function Decrypt(Input As String, Key As String) As String
+            Try
+                Dim KeyHeader As String = ""
+                For Each Character In Input.Substring(0, 1)
+                    KeyHeader &= ControlChars.ConvertLongToCharacter(ControlChars.ConvertCharacterToLong(Character) - 360)
+                Next
+
+                Dim Multiplier = CInt(KeyHeader.Substring(0, 1))
+
+                Dim KeyIndex = 0
+                Dim CharacterDecryptionLength As Int64 = 0
+                Dim Modifier As Int64 = 0
+                Dim WordFoundTrigger = False
+                Dim Word = Input.Substring(1)
+                Dim ReturnValue = ""
+
+                Try
+                    For Index = 0 To Word.Length - 1
+                        Try
+                            Select Case True
+                                Case WordFoundTrigger
+                                    ReturnValue += DecryptChar(Word.Substring(Index + Modifier, CharacterDecryptionLength), Key.Chars(KeyIndex), 1, Multiplier)
+                                    Index += Modifier + CharacterDecryptionLength
+                                    KeyIndex += 1
+                                    If KeyIndex >= Key.Length Then KeyIndex = 0
+                                Case Else
+                                    Try
+                                        Modifier = CStr(ControlChars.ConvertLongToCharacter(ControlChars.ConvertCharacterToLong(Word.Substring(Index, 1)) - 360))
+                                        CharacterDecryptionLength = CStr(ControlChars.ConvertLongToCharacter(ControlChars.ConvertCharacterToLong(Word.Substring(Index + 1, Modifier)) - 360))
+
+                                        WordFoundTrigger = True
+                                    Catch
+                                    End Try
+                            End Select
+
+
+
+                        Catch ex As Exception
+
+                        End Try
+                    Next
+                Catch
+                End Try
+                Return ReturnValue
+            Catch ex As Exception
+                Return ex.Message
+            End Try
+        End Function
+
+    End Class
+End Namespace
